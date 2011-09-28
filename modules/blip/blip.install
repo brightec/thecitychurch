@@ -1,0 +1,34 @@
+<?php
+
+/**
+	* Implements hook_field_schema().
+	*/
+function blip_field_schema($field) {
+
+	// Get the schema from the image module and merge the fields into our schema.
+  module_load_install('image');
+	$imageSchema = module_invoke('image', 'field_schema', $field);
+	unset($imageSchema['columns']['title']);
+
+	//define columns
+	$columns = array(
+		'title' => array(
+			'type' => 'varchar',
+			'not null' => FALSE,			
+		),
+		'text' => array(
+			'type' => 'text',
+			'not null' => FALSE,			
+		),			
+	);
+			
+	$columns += $imageSchema['columns'];
+	
+	$schema = array(
+		'columns' => $columns,
+		'indexes' => $imageSchema['indexes'],
+		'foreign keys' => $imageSchema['foreign keys'],			
+	);
+	
+	return $schema;
+}

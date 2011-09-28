@@ -1,0 +1,172 @@
+<?php
+
+/**
+ * @file
+ * Add content filter for embeding CCB forms
+ */
+
+/**
+ * Implements hook_help().
+ */
+function ccb_forms_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#ccb_forms':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The CCB Forms module allows forms to be included in pages.') . '</p>';
+      $output .= '<h3>' . t('Setup') . '</h3>';
+      $output .= '<p>' . t('Edit a <a href="/admin/config/content/formats">Text Format</a> to use the CCB Forms filter') . '</p>';
+      $output .= '<p>' . t('Make sure the filter comes AFTER any filter that restricts HTML code') . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t('When editing the body of a node, enter the following text: [form:XXXXXX] where XXXXXX is the form ID from Church Community Builder') . '</p>';
+      
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ccb_forms_menu() {
+  $items = array();
+  $items['ccb-form-view/%'] = array(
+    'title' => 'CCB Forms',
+    'page callback' => '_ccb_forms_view',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+  $items['ccb-form-post/%'] = array(
+    'title' => 'CCB Forms',
+    'description' => 'Used to submit form to CCB and display response',
+    'page callback' => 'ccb_forms_post',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_filter_info().
+ */
+function ccb_forms_filter_info() {
+  $filters = array(
+    'ccb_forms' => array(
+      'title' => t('CCB Forms filter'),
+      'description' => t('Embeds CCB forms in a page.'),
+      'process callback' => '_ccb_forms_filter_process',
+    ),
+  );
+  
+  return $filters;
+}
+
+function _ccb_forms_filter_process($text, $filter, $format) {
+  // Find any occurances of our short code
+  $count = preg_match_all('/\[form:([0-9]+)\]/', $text, $matches);
+  
+  // Loop through occurances and replace short code with form
+  for ($i=0; $i < $count; $i++) {
+    // Short vars
+    $form_text = $matches[0][$i];
+    $form_id = $matches[1][$i];
+    $replacement_html = '<iframe id="iframe" class="ccb-iframe" src="/ccb-form-view/' . $form_id . '" frameBorder="0"></iframe>';
+    $text = preg_replace('/\[form:' . $form_id . '\]/', $replacement_html, $text);
+  }
+  
+  return $text;
+}
+
+/*
+ * Alters the html produced by ccb:
+ *   - removes scripts & styles
+ *   - add a custom stylesheet
+ *   - adds a hidden status field (see https://churchcommunity.fogbugz.com/default.asp?W529)
+ *   - alters form action to post to our handler, not ccb
+ */
+
+function _ccb_alter_html($str, $form_id) {
+  $dom = str_get_html($str);
+  
+  // Update form action
+  $form = $dom->find('form');
+  $form[0]->action = '/ccb-form-post/' . $form_id;
+  
+  // Add a hidden element so the form validates
+  $sharing = $dom->find('#sharing');
+  $sharing[0]->outertext = '<input type="hidden" name="status" value="a8rh(B8aiHa(kcBHbK1oA8aItDO0iLnA:gHkOgFT" />';
+  
+  // Remove script elements
+  foreach ($dom->find('script') as $item) {
+    $item->outertext = '';
+  }
+  
+  // Remove style elements
+  foreach ($dom->find('style') as $item) {
+    $item->outertext = '';
+  }
+  
+  // Remove link elements
+  foreach ($dom->find('link') as $item) {
+    $item->outertext = '';
+  }
+  
+  // Remove meta elements
+  foreach ($dom->find('link') as $item) {
+    $item->outertext = '';
+  }
+
+  // add in our own stylesheet (by replacing the <title> element)
+  $title = $dom->find('title');
+  foreach ($title as $item) {
+    $item->outertext = '<link rel="stylesheet" href="/' . drupal_get_path('theme', 'tccc_final') . '/css/typography.css" />'.
+    '<link rel="stylesheet" href="/' . drupal_get_path('module', 'ccb_forms') . '/ccb_forms.css" />';
+  }
+  
+  // bit of javascript to make the iframe the right size
+  foreach ($dom->find('body') as $body) {
+    $body->onload = 'if (window.parent.resizeIframes) window.parent.resizeIframes();';
+  }
+  
+  return $dom->save();
+}
+
+
+function _ccb_forms_view($form_id) {
+  
+  // Get the form HTML
+  require_once('simple_html_dom.php');
+  $url = 'https://thecitychurch.ccbchurch.com/w_form_response.php?form_id=' . $form_id;
+  $str = file_get_contents($url);
+  
+  // alter the response and show it
+  $str = _ccb_alter_html($str, $form_id);
+  print $str;
+  exit;
+}
+
+
+function ccb_forms_post($form_id) {
+  // Load in our custom http_request function. See file for reason
+  require_once 'ccb_forms.inc';
+  require_once('simple_html_dom.php');
+  
+  // Original form POST url
+  $url = 'https://thecitychurch.ccbchurch.com/w_form_response.php?form_id=' . $form_id;
+  
+  // Build our http request
+  $options = array(
+    'headers' => array(
+      'Content-Type' => 'application/x-www-form-urlencoded',
+    ),
+    'method' => 'POST',
+    'data' => http_build_query($_POST),
+  );
+  
+  // Submit the form
+  $response = ccb_forms_http_request($url, $options);
+  
+  // alter the response and show it
+  $str = $response->data;
+  $str = _ccb_alter_html($str, $form_id);
+  print $str;
+  exit;
+}

@@ -1,0 +1,378 @@
+<?php
+
+/**
+ * @file
+ * Implement an compound field, made up of Image, Title and Text based on the image module's image field.
+ */
+
+
+/************ DEFINE THE FIELD *************/
+
+/**
+	* Implements hook_field_info().
+	*/
+function blip_field_info() {
+	$image = module_invoke('image', 'field_info');	
+
+	$field = array(
+		'blip' => array(
+			'label' => 'Blip (image/title/text)',
+			'description' => 'Image, title and text comound field.',
+			'default_widget' => 'blip_blip',
+			'default_formatter' => 'blip',
+			'settings' => $image['image']['settings'],
+			'instance_settings' => $image['image']['instance_settings'],			
+		),
+	);
+	
+	return $field;
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function blip_field_settings_form($field, $instance) {
+	return module_invoke('image', 'field_settings_form', $field, $instance);
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function blip_field_instance_settings_form($field, $instance) {
+  $settings = $instance['settings'];
+  
+	$form = module_invoke('image', 'field_instance_settings_form', $field, $instance);
+
+	// Remove title option.
+	unset($form['title_field']);
+
+	return $form;
+}
+
+/**
+ * Implements hook_field_load().
+ */
+function blip_field_load($entity_type, $entities, $field, $instances, $langcode, &$items, $age) {
+  image_field_load($entity_type, $entities, $field, $instances, $langcode, $items, $age);
+}
+
+/**
+ * Implements hook_field_prepare_view().
+ */
+function blip_field_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items) {
+	image_field_prepare_view($entity_type, $entities, $field, $instances, $langcode, $items);
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function blip_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  image_field_presave($entity_type, $entity, $field, $instance, $langcode, $items);
+}
+
+/**
+ * Implements hook_field_insert().
+ */
+function blip_field_insert($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  image_field_insert($entity_type, $entity, $field, $instance, $langcode, $items);
+}
+
+/**
+ * Implements hook_field_update().
+ */
+function blip_field_update($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  image_field_update($entity_type, $entity, $field, $instance, $langcode, $items);
+}
+
+/**
+ * Implements hook_field_delete().
+ */
+function blip_field_delete($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  image_field_delete($entity_type, $entity, $field, $instance, $langcode, $items);
+}
+
+/**
+ * Implements hook_field_delete_revision().
+ */
+function blip_field_delete_revision($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  image_field_delete_revision($entity_type, $entity, $field, $instance, $langcode, $items);
+}
+
+/**
+	* Implements hook_field_is_empty().
+	*/
+function blip_field_is_empty($item, $field) {
+	return image_field_is_empty($item, $field);
+}
+
+/**
+	* Implements hook_field_validate().
+	*/
+function blip_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+//	foreach ($items as $delta => $item) {
+//		if(!empty($item['value'])) {
+//			
+//		}
+//	}
+}
+
+
+/************ DEFINE THE WIDGET *************/
+
+/**
+	* Implements hook_field_widget_info().
+	*/
+function blip_field_widget_info() {
+	$imageWidget = module_invoke('image', 'field_widget_info');
+
+	$imageWidget['image_image']['settings']['image_style'] = '';
+
+	$widget = array(
+		'blip_blip' => array(
+			'label' => t('Blip'),
+			'field types' => array('blip'),
+			'settings' => $imageWidget['image_image']['settings'],
+			'behaviors' => $imageWidget['image_image']['behaviors'],
+		),
+	);
+	
+	return $widget;
+}
+
+/**
+ * Implements hook_field_widget_settings_form().
+ */
+function blip_field_widget_settings_form($field, $instance) {
+	return image_field_widget_settings_form($field, $instance);
+}
+
+/**
+	* Implements hook_field_widget_form().
+	*/
+function blip_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+
+	$elements = image_field_widget_form($form, $form_state, $field, $instance, $langcode, $items, $delta, $element);
+
+	foreach (element_children($elements) as $delta) {	
+		foreach ($elements[$delta]['#process'] as $key => $process) {
+			if($process == 'image_field_widget_process') {
+				unset($elements[$delta]['#process'][$key]);
+			}
+		}	
+	  $elements[$delta]['#process'][] = 'blip_widget_process';	
+	}
+	
+	return $elements;
+}
+
+/**
+ * Element #process callback function.
+ *
+ * @param array $element
+ * @param arrayreference $form_state
+ * @param array $form
+ * @return array
+ */
+function blip_widget_process($element, &$form_state, $form) {
+
+	$element = @image_field_widget_process($element, $form_state, $form);
+
+	$item = $element['#value'];
+	$item['fid'] = $element['fid']['#value'];
+	
+  $instance = field_widget_instance($element, $form_state);
+  
+	$settings = $instance['settings'];
+	$widget_settings = $instance['widget']['settings'];  
+
+	$element['title'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Link',
+		'#default_value' => isset($item['title']) ? $item['title'] : '',
+	);
+	
+	$element['text'] = array(
+		'#type' => 'textarea',
+		'#title' => 'Description',
+		'#default_value' => isset($item['text']) ? $item['text'] : '',
+	);	
+	
+	return $element;
+}
+
+
+
+/************ DEFINE THE FORMATTER *************/
+
+/**
+	* Implements hook_field_formatter_info().
+	*/
+function blip_field_formatter_info() {
+	return array(
+		'blip' => array(
+			'label' => t('Blip'),
+			'field types' => array('blip'),
+			'settings' => array('image_style' => '', 'image_link' => '', 'title_html_wrapper' => 'div', 'text_html_wrapper' => 'div'),
+		),
+	);
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function blip_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+	$element =  image_field_formatter_settings_form($field, $instance, $view_mode, $form, $form_state);
+	
+	$display = $instance['display'][$view_mode];
+	$settings = $display['settings']; 
+	
+	$options = array(
+		'div' => 'Default (DIV)',
+		'p' => 'P',		
+		'h2' => 'H2',		
+		'h3' => 'H3',				
+		'h4' => 'H4',						
+		'h5' => 'H5',						
+		'h6' => 'H6',										
+		'strong' => 'STRONG',	
+		'em' => 'EM',		
+	);
+
+	$element['title_html_wrapper'] = array(
+	  '#type' => 'select',
+	  '#title' => t('Wrap Title field in HTML element'),
+	  '#options' => $options,
+	  '#default_value' => $settings['title_html_wrapper'],
+	  '#description' => t('Select the the HTML element to wrap the Title field if required.'),
+	);
+
+	$element['text_html_wrapper'] = array(
+	  '#type' => 'select',
+	  '#title' => t('Wrap Text field in HTML element'),
+	  '#options' => $options,
+	  '#default_value' => $settings['text_html_wrapper'],
+	  '#description' => t('Select the the HTML element to wrap the Text field if required.'),
+	);		
+	
+	return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function blip_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $summary[] = image_field_formatter_settings_summary($field, $instance, $view_mode);
+  
+	$display = $instance['display'][$view_mode];
+	$settings = $display['settings'];  
+  
+	if(isset($settings['title_html_wrapper'])) {
+		$summary[] .= t('Title field wrapped in HTML :title_wrap element.', array(':title_wrap' => strtoupper($settings['title_html_wrapper'])));
+	}
+	
+	if(isset($settings['text_html_wrapper'])) {
+		$summary[] .= t('Text field wrapped in HTML :text_wrap element.', array(':text_wrap' => strtoupper($settings['text_html_wrapper'])));
+	}	
+	
+  return implode('<br />', $summary);
+}
+
+/**
+	* Implements hook_field_formatter_view().
+	*/
+function blip_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  // Check if the formatter involves a link.
+  if ($display['settings']['image_link'] == 'content') {
+    $uri = entity_uri($entity_type, $entity);
+  }
+  elseif ($display['settings']['image_link'] == 'file') {
+    $link_file = TRUE;
+  }
+
+  foreach ($items as $delta => $item) {
+    if (isset($link_file)) {
+      $uri = array(
+        'path' => file_create_url($item['uri']),
+        'options' => array(),
+      );
+    }
+    $element[$delta] = array(
+      '#theme' => 'blip_formatter',
+      '#item' => $item,
+      '#image_style' => $display['settings']['image_style'],
+      '#title_html_wrapper' => $display['settings']['title_html_wrapper'],
+      '#text_html_wrapper' => $display['settings']['text_html_wrapper'],            
+      '#path' => isset($uri) ? $uri : '',
+    );
+  }
+
+  return $element;	
+}
+
+
+
+/************ DEFINE THE THEME *************/
+
+/**
+	* Implements hook_theme().
+	*/
+function blip_theme() {
+  return array(
+    'blip_formatter' => array (
+      'variables' => array('item' => NULL, 'path' => NULL, 'image_style' => NULL, 'title_html_wrapper' => NULL, 'text_html_wrapper' => NULL),
+    ),
+  );
+}
+
+/**
+ * Returns HTML for an blip field formatter.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: An array of blip data.
+ *   - path: An array containing the link 'path' and link 'options'. 
+ *   - image_style: An optional image style. 
+ *   - title_html_wrapper: HTML element to wrap title field.
+ *   - text_html_wrapper: HTML element to wrap text field.
+ *
+ * @ingroup themeable
+ */
+function theme_blip_formatter($variables) {
+	
+	$item = $variables['item'];
+	$image = array(
+	  'path' => $item['uri'],
+	  'alt' => $item['alt'],
+	);	
+	
+	$titleWrap = $variables['title_html_wrapper'];
+	$textWrap = $variables['text_html_wrapper'];	
+	
+	// Do not output an empty 'title' attribute.
+	if (drupal_strlen($item['title']) > 0) {
+	  $image['title'] = $item['title'];
+	}	
+	$output = '<div class="clear">&nbsp;</div>';
+	$output .= '<div class="blip-field">';
+	$output .= '<div class="blip-field-image">';
+	
+	// Render image HTML
+	if ($variables['image_style']) {
+	  $image['style_name'] = $variables['image_style'];
+	  $output .= theme('image_style', $image);
+	}
+	else {
+	  $output .= theme('image', $image);
+	}	
+	
+	$output .= '</div>';			
+	$output .= '<div class="blip-field-content">';
+	$output .= '<' . $titleWrap . ' class="blip-field-title">' . field_filter_xss($item['title']) . '</' . $titleWrap . '>';		
+	$output .= '<' . $textWrap . ' class="blip-field-text">' . field_filter_xss($item['text']) . '</' . $textWrap . '>';			
+  $output .= '</div>';	
+  $output .= '</div>';
+  
+	return $output;
+}

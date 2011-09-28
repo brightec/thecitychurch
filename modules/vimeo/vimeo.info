@@ -1,0 +1,4 @@
+name = Vimeo
+description = Provides a field renderer to display vimeo videos.
+package = Brightec
+core = 7.x

@@ -1,0 +1,7 @@
+name = Church Community Builder forms
+description = Add content filter for embedding CCB forms
+package = Brightec
+core = 7.x
+
+scripts[] = ccb_forms.js
+

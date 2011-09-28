@@ -1,0 +1,23 @@
+<?php
+
+/**
+	* Implements hook_field_schema().
+	*/
+function compound_field_field_schema($field) {
+	
+	// define columns
+	$columns = array(
+		'title' => array(
+			'type' => 'varchar',
+			'not null' => FALSE,			
+		),
+		'text' => array(
+			'type' => 'text',
+			'not null' => FALSE,			
+		),			
+	);
+	
+	return array(
+		'columns' => $columns,
+	);
+}

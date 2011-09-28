@@ -1,0 +1,5 @@
+name = Church Community Builder authentication
+description = Add CCB authentication using CCB API
+package = Brightec
+configure = admin/config/people/ccb
+core = 7.x

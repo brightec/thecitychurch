@@ -1,0 +1,165 @@
+<?php
+
+/**
+ * @file
+ * Add CCB authentication using CCB API
+ * 
+ * Note: php_openssl extension must be enabled as API requests must be over SSL
+ */
+
+/**
+ * Implement hook_permission()
+ */
+function ccb_auth_permission() {
+  return array(
+    'administer ccb auth' => array(
+      'title' => t('Administer CCB auth module'), 
+    ),
+  );
+}
+
+/**
+ * Implement hook_menu().
+ */
+function ccb_auth_menu() {
+  $items = array();
+  
+  $items['admin/config/people/ccb'] = array(
+    'title' => 'CCB Authentication',
+    'description' => 'Configure CCB Authentication',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ccb_auth_admin_form'),
+    'access arguments' => array('administer ccb auth'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'ccb_auth.admin.inc',
+  );
+  
+  return $items;
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter for login form (example.com/user)
+ */
+function ccb_auth_form_user_login_alter(&$form, &$form_state, $form_id) {
+  _ccb_auth_form_user_login_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter for user_login_block
+ */
+function ccb_auth_form_user_login_block_alter(&$form, &$form_state, $form_id) {
+  _ccb_auth_form_user_login_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Helper function for ccb_auth_form_user_login_alter and ccb_auth_form_user_login_block_alter
+ * This function alters the validate functions on the login form to add CCB authentication
+ */
+function _ccb_auth_form_user_login_alter(&$form, &$form_state, $form_id) {
+  // Add CCB auth after Drupal auth.
+  // Drupal auth must be first - http://drupal.org/node/1022362
+  $form['#validate'] = array('user_login_name_validate', 'user_login_authenticate_validate', 'ccb_auth_user_login_validate', 'user_login_final_validate');
+  
+  // Remove links from login block - new users and password resets should be done through CCB not Drupal
+  if ($form_id == 'user_login_block') $form['links']['#markup'] = '';
+}
+
+/**
+ * Validate function for user logon forms.
+ */
+function ccb_auth_user_login_validate($form, &$form_state) {
+  // Shorter variables for 2 form inputs
+  $name = $form_state['values']['name'];
+  $pass = $form_state['values']['pass'];
+  
+  // API URL
+  $url = 'https://' . variable_get('ccb_auth_user') . ':' . variable_get('ccb_auth_pass') . '@' . variable_get('ccb_auth_url');
+  
+  // Don't try to authenticate user ID 1
+  $account = user_load_by_name($name);
+  if (is_object($account) && $account->uid == 1) {
+    return FALSE;
+  }
+  
+  // Check login with CCB
+  $settings = array (
+    'srv' => 'individual_id_from_login_password',
+    'login' => $name,
+    'password' => $pass,
+  );
+  $response = drupal_http_request($url . '?' . http_build_query($settings));
+  
+  // Convert response to XML object
+  $xml = new SimpleXMLElement($response->data);
+  
+  // Check if CCB auth was successful
+  if ($xml->response->items && $xml->response->items->attributes()->count == 1) {
+    // Save CCB user ID
+    $id = (string) $xml->response->items->item->id;
+    
+    // Get name, email etc from CCB
+    $settings = array (
+      'srv' => 'individual_credentials_from_id',
+      'id' => $id,
+    );
+    $response = drupal_http_request($url . '?' . http_build_query($settings));
+    
+    // Convert response to XML object
+    $credentials = new SimpleXMLElement($response->data);
+    
+    // Create or update Drupal account
+    require_once DRUPAL_ROOT . '/includes/password.inc';
+    $edit['name'] = $name;
+    $edit['pass'] = user_hash_password($pass);
+    $edit['mail'] = (string) $credentials->response->individuals->individual->email;
+    $edit['status'] = 1;
+    $account = user_save($account, $edit);
+    
+    // Get CCB groups for user
+    $settings = array (
+      'srv' => 'individual_groups',
+      'individual_id' => $id,
+    );
+    $response = drupal_http_request($url . '?' . http_build_query($settings));
+    
+    // Convert response to XML object
+    $groups = new SimpleXMLElement($response->data);
+    
+    // Build an array of group/role pairings
+    // $group_link[ccb group id][drupal role id]
+    $group_roles = explode(';', variable_get('ccb_auth_groups'));
+    foreach ($group_roles as $pair) {
+      list($key, $val) = explode(',', $pair);
+      $group_link[$key] = $val;
+    }
+    
+    $edit = array(
+      'roles' => array(),
+    );
+    
+    $admin_role_id = variable_get('user_admin_role', 0);
+    
+    // Check if the users' groups need assigning to a Drupal role
+    foreach ($groups->response->individuals->individual->groups->group as $group) {
+      $group_id = (int) $group->id;
+      // Check if this group is paired with a role
+      if (isset($group_link[$group_id])) {
+        $role_id = $group_link[$group_id];
+        // Don't allow people to pair with the admin role
+        if ($role_id != $admin_role_id) $edit['roles'][$role_id] = $role_id;
+      }
+    }
+    
+    // Save role assignments
+    $account = user_save($account, $edit);
+    
+    // Login user
+    $fake_form_state['uid'] = $account->uid;
+    user_login_submit(array(), $fake_form_state);
+    global $user;
+    $form_state['uid'] = $user->uid;
+    return;
+  } else {
+    return FALSE;
+  }
+}

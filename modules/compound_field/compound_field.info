@@ -1,0 +1,6 @@
+name = Compound field
+description = Defines title, text compound field types.
+package = Brightec
+core = 7.x
+dependencies[] = field
+files[] = compound_field.module

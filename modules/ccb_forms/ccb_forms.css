@@ -1,0 +1,106 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	color: black;
+}
+
+.container {
+  width: auto !important;
+  padding: 1px;
+}
+
+.block {
+  text-align: center;
+  margin: 6px 0px;
+}
+
+.focus_block .block{
+  text-align: left;
+  display: inline;
+}
+
+.focus_block p {
+}
+
+.action {
+  text-align: center;
+}
+.action input{
+  background-image: url('form_submit.png');
+  background-repeat: no-repeat;
+  background-position: 0 5px;
+  background-color: transparent;
+  width: 86px;
+  height: 35px;
+  color: white;
+  cursor: pointer;
+}
+
+#dialog{
+  -moz-box-shadow: 0px 0px 2px 3px #dfdfdf;
+  -webkit-box-shadow: 0px 0px 2px 2px #dfdfdf;
+  box-shadow: 0px 0px 2px 2px #dfdfdf;	
+  margin: 2px;
+  padding: 1px;
+}
+
+#main-form {
+ background-color: #d2e2f6;
+ padding: 19px;
+}
+
+h1 {
+  line-height: 0px;
+  margin-bottom: 25px;
+  color: black;
+  font-size: 17px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 13px;
+  text-align: center;
+}
+
+hr {
+  display:none;
+}
+
+label, .focus_block h2 {
+  display: inline;
+  background-color: #2a4269;
+  padding: 5px;
+  margin: 0px;
+  color: white;
+  border: none;
+}
+
+label span {
+  padding-left: 5px;
+}
+
+input, textarea {
+  background-color: white;
+  padding: 5px;
+  margin: 0px;
+  margin-left: -3px;
+  border: none;
+	width: 57%;
+  display: inline;
+}
+
+textarea {
+  width: 97%;
+}
+
+.focus_block input {
+  height: 15px;
+}
+
+#notice {
+	background: #cc0000;
+	color: #ffffff;
+	padding-left: 5px;
+}

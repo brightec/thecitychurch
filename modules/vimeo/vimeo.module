@@ -1,0 +1,108 @@
+<?php
+
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function vimeo_field_formatter_info() {
+  return array(
+    'vimeo_iframe' => array(
+      'label' => t('Vimeo iframe'),
+      'field types' => array('text'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function vimeo_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $element = array();
+
+  $element['width'] = array(
+    '#title' => t('Width'),
+  	'#type' => 'textfield',
+    '#size' => 10,
+    '#default_value' => $settings['width'],
+    '#element_validate' => array('_element_validate_integer_positive'),
+    '#required' => TRUE,
+  );
+  $element['height'] = array(
+    '#title' => t('Height'),
+  	'#type' => 'textfield',
+    '#size' => 10,
+    '#default_value' => $settings['height'],
+    '#element_validate' => array('_element_validate_integer_positive'),
+    '#required' => TRUE,
+  );
+  
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function vimeo_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = $settings['width'] . ' x ' . $settings['height'];
+  return $summary;
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function vimeo_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'vimeo_iframe':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'vimeo_iframe',
+          '#id' => $item['safe_value'],
+        	'#width' => $display['settings']['width'],
+          '#height' => $display['settings']['height'],
+        );
+      }
+      break;
+  }
+  return $element;
+}
+
+
+
+
+
+/**
+ * Implements hook_theme().
+ */
+function vimeo_theme() {
+  return array(
+    'vimeo_iframe' => array (
+      'variables' => array('id' => NULL, 'width' => NULL, 'height' => NULL),
+    ),
+  );
+}
+
+
+function theme_vimeo_iframe($variables) {
+  $id = $variables['id'];
+  $width = $variables['width'];
+  $height = $variables['height'];
+  
+  if ($id && $width && $height) {
+    $attributes = array(
+      'src' => 'http://player.vimeo.com/video/' . $id . '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0',
+      'width' => $width,
+      'height' => $height,
+      'frameborder' => 0,
+    );
+    return '<iframe id="vimeo-player"' . drupal_attributes($attributes) . '></iframe>';
+  }
+}
+

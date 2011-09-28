@@ -1,0 +1,4 @@
+name = bible
+description = A field to store Bible references
+core = 7.x
+package = Brightec

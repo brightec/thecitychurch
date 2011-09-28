@@ -1,0 +1,7 @@
+name = Blip
+description = Defines image,title,text compound field types.
+package = Brightec
+core = 7.x
+dependencies[] = field
+dependencies[] = image
+files[] = blip.module

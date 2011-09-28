@@ -1,0 +1,171 @@
+<?php
+
+
+/* fields */
+
+
+/**
+ * Implements hook_field_info().
+ */
+function bible_field_info() {
+  return array(
+    'bible_reference' => array(
+      'label' => 'Bible reference',
+      'default_widget' => 'bible_reference_default',
+      'default_formatter' => 'bible_reference_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function bible_field_settings_form($field, $instance, $has_data) {
+  $settings = $field['settings'];
+  $form = array();
+  return $form;
+}
+
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function bible_field_instance_settings_form($field, $instance) {
+  $settings = $instance['settings'];
+  $form = array();
+  return $form;
+}
+
+
+/**
+ * Implements hook_field_validate().
+ */
+function bible_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+}
+
+
+/**
+ * Implements hook_field_load().
+ *
+ * Where possible, generate the sanitized version of each field early so that
+ * it is cached in the field cache. This avoids looking up from the filter cache
+ * separately.
+ *
+ * @see text_field_formatter_view()
+ */
+function bible_field_load($entity_type, $entities, $field, $instances, $langcode, &$items) {
+  foreach ($entities as $id => $entity) {
+    foreach ($items[$id] as $delta => $item) {
+      $items[$id][$delta]['safe_value'] = isset($item['value']) ? check_plain($item['value']) : '';
+    }
+  }
+}
+
+
+/**
+ * Implements hook_field_presave().
+ */
+function bible_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  switch ($field['type']) {
+    case 'bible_reference':
+      foreach ($items as $delta => $item) {
+        $items[$delta]['book'] = !empty($item['value']) ? bible_parse_book($item['value']) : ''; 
+      }
+  }
+}
+
+
+// returns a machine friendly name of the book, eg '1 Samuel 2' becomes '1-samuel'
+
+function bible_parse_book($ref) {
+  $ref = explode(' ', ltrim(rtrim($ref)));
+  if (is_numeric($ref[0])) {
+    return strtolower($ref[0] . '-' . $ref[1]); 
+  } else {
+    return strtolower($ref[0]);
+  }
+}
+
+
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function bible_field_is_empty($item, $field) {
+  switch ($field['type']) {
+    case 'bible_reference':
+      return empty($item['value']);
+  }
+}
+
+
+/* widgets */
+
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function bible_field_widget_info() {
+  return array(
+    'bible_reference_default' => array(
+      'label' => t('Default'),
+      'field types' => array('bible_reference'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function bible_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'bible_reference_default':
+      return _bible_reference_default_widget_form($form, $form_state, $field, $instance, $langcode, $items, $delta, $element);
+  }
+  return $element;
+}
+
+
+function _bible_reference_default_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $element['value'] = array(
+    '#type' => 'textfield',
+    '#default_value' => isset($items[$delta]['value']) ? $items[$delta]['value'] : '',
+  );
+  return $element;
+}
+
+
+/* formatters */
+  
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function bible_field_formatter_info() {
+  return array(
+    'bible_reference_default' => array(
+      'label' => t('Default'),
+      'field types' => array('bible_reference'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function bible_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'bible_reference_default':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+        	'#markup' => isset($item['safe_value']) ? $item['safe_value'] : check_plain($item['value']),
+        );
+      }
+      break;
+  }
+  return $element;
+}
+

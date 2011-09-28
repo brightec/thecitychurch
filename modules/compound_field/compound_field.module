@@ -1,0 +1,144 @@
+<?php
+
+/************ DEFINE THE FIELD *************/
+
+/**
+	* Implements hook_field_info().
+	*/
+function compound_field_field_info() {
+	
+	return array(
+		'boof' => array(
+			'label' => 'Boof',
+			'description' => 'Title and text compound field.',
+			'default_widget' => 'boof',
+			'default_formatter' => 'boof_default',
+		),
+	);
+}
+
+/** 
+	* Implements hook_field_validate().
+	*/
+function compound_field_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+//	foreach ($items as $delta => $item) {
+//		if(!empty($item['value'])) {
+//			
+//		}
+//	}
+}
+
+/**
+	* Implements hook_field_is_empty().
+	*/
+function compound_field_field_is_empty($item, $field) {
+
+	if (empty($item['title']) && empty($item['text'])) {
+	  return TRUE;
+	}
+	return FALSE;
+}
+
+
+
+/************ DEFINE THE WIDGET *************/
+
+/**
+	* Implements hook_field_widget_info().
+	*/
+function compound_field_field_widget_info() {
+	return array(
+		'boof' => array(
+			'label' => t('Default'),
+			'field types' => array('boof'),
+		),
+	);
+}
+
+/**
+	* Implements hook_field_widget_form().
+	*/
+function compound_field_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+		
+	$element['title'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Title',
+		'#default_value' => isset($items[$delta]['title']) ? $items[$delta]['title'] : '',
+	);
+	
+	$element['text'] = array(
+		'#type' => 'textarea',
+		'#title' => 'Text',
+		'#default_value' => isset($items[$delta]['text']) ? $items[$delta]['text'] : '',
+	);
+
+	return $element;
+}
+
+
+
+/************ DEFINE THE FORMATTER *************/
+
+/**
+	* Implements hook_field_formatter_info().
+	*/
+function compound_field_field_formatter_info() {
+	return array(
+		'boof_default' => array(
+			'label' => t('Default'),
+			'field types' => array('boof'),
+		),
+	);
+}
+
+/**
+	* Implements hook_field_formatter_view().
+	*/
+function compound_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+	foreach ($items as $delta => $item) {
+		$element[$delta] = array(
+		  '#theme' => 'boof_formatter',
+		  '#item' => $item,
+		);
+	}
+
+  return $element;	
+}
+
+/************ DEFINE THE THEME *************/
+
+/**
+	* Implements hook_theme().
+	*/
+function compound_field_theme() {
+  return array(
+    'boof_formatter' => array (
+      'variables' => array('item' => NULL),
+    ),
+  );
+}
+
+/**
+ * Returns HTML for an blob field formatter.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: An array of blob data.
+ *
+ * @ingroup themeable
+ */
+function theme_boof_formatter($variables) {
+	$item = $variables['item'];
+	$output  = '<div class="blob-field">';
+	$output .= '<div class="blob-field-title">' . field_filter_xss($item['title']) . '</div>';		
+	$output .= '<div class="blob-field-text">' . field_filter_xss($item['text']) . '</div>';			
+  $output .= '</div>';
+	return $output;
+}
+
+
+
+
+

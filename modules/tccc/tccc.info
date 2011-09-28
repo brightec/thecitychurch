@@ -1,0 +1,31 @@
+name = TCCC
+description = Module for all the functions for TCCC site
+package = Brightec
+core = 7.x
+
+dependencies[] = bible
+dependencies[] = blip
+dependencies[] = ccb_auth
+dependencies[] = ccb_forms
+dependencies[] = compound_field
+dependencies[] = advanced_help
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = entity
+dependencies[] = field_collection
+dependencies[] = field_group
+dependencies[] = file_entity
+dependencies[] = googleanalytics
+dependencies[] = htmlpurifier
+dependencies[] = imagecache_actions
+dependencies[] = imce
+dependencies[] = imce_wysiwyg
+dependencies[] = link
+dependencies[] = media
+dependencies[] = panels
+dependencies[] = pathauto
+dependencies[] = references
+dependencies[] = styles
+dependencies[] = views
+dependencies[] = wysiwyg
+

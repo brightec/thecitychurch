@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Implements hook_field_schema().
+ */
+function bible_field_schema($field) {
+  switch ($field['type']) {
+
+    case 'bible_reference':
+      $columns = array(
+        'value' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+        ),
+        'book' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+        ),
+      );
+      $indexes = array(
+        'book' => array('book'),
+      );
+      return array(
+        'columns' => $columns,
+        'indexes' => $indexes,
+      );
+
+  }
+}
