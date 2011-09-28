@@ -1,0 +1,166 @@
+#logo {
+background-image:url(../images/header_logo.png);
+background-repeat:no-repeat;
+display:block;
+height:74px;
+margin:0 0 15px 66px;
+text-indent:-3400px;
+width:100px;
+}
+
+
+#header {
+z-index:500;
+}
+
+#header_sites a {
+font-size:14px;
+}
+
+#header_sites {
+text-align:center;
+}
+
+#footer_tag {
+color:#b7b7b7;
+}
+
+#header-wrapper #search-form #edit-keys,#header-wrapper #search-form--2 #edit-keys--2 {
+background-image:url(../images/search_03.jpg);
+border:0;
+float:left;
+height:23px;
+padding:0 0 0 10px;
+width:156px;
+}
+
+#search-form #edit-submit {
+cursor:pointer;
+}
+
+#search-form #edit-keys:focus {
+outline:none;
+}
+
+#header-wrapper #search-form #edit-submit,#header-wrapper #search-form--2 #edit-submit--3,#header-wrapper #search-form--2 #edit-submit--2 {
+background-image:url(../images/go-button_04.jpg);
+border:0;
+float:left;
+height:23px;
+margin:0 0 0 -1px;
+width:33px;
+}
+
+
+#nav1 {
+ 
+}
+
+#nav1 .menu li {
+list-style:none;
+margin:0;
+padding:0;
+}
+
+#nav1 a,#header_sites a {
+background-image:url(../images/menu_dots.png);
+background-position:right;
+background-repeat:no-repeat;
+color:#5c7696;
+font-family:'ChantillyRegular';
+font-size:14px;
+margin-left:12px;
+padding: 2px 12px 2px 0;
+text-transform:uppercase;
+}
+
+
+
+
+#nav1 .depth-1 {
+position:relative;
+z-index:500;
+}
+
+#nav1 .depth-2 {
+background: #d2e2f6;
+border: 1px solid #b7d0ee;
+height: 361px;
+left: -11px;
+overflow: hidden;
+padding: 7px;
+position: absolute;
+top: 29px;
+}
+
+
+#nav1 .depth-1 li {
+  float: left;
+}
+
+
+#nav1 .depth-2 .column {
+  float:left;
+  background: 0;
+  padding: 0;
+  width: 169px;
+  position: static;
+}
+
+#nav1 .depth-1 li.first {
+  margin-right: 3px;
+}
+
+.arrow-pointer {
+  visibility: hidden;
+  width: 19px;
+  height: 10px;
+  background: url(../images/arrow-head.png) top left no-repeat;
+  z-index: 500;
+  position: relative;
+  margin: 0 auto;
+
+}
+
+#nav1 .depth-3 li {
+  float: none;
+  padding: 5px 0;
+  background: #deeafa;
+  margin-bottom: 3px;
+}
+
+#nav1 .depth-3 li.first {
+  margin-right: 0;
+}
+
+#nav1 .depth-4 li {
+  padding: 0;
+  background: 0;
+  margin: 3px 0;
+}
+
+
+
+#nav1 .depth-3 a {
+margin:0 0 0 6px;
+padding:0 6px 0 15px;
+width:136px;
+}
+
+
+#nav1 .depth-2 a {
+background:none;
+}
+
+.category-link {
+margin-left:12px;
+padding-right:12px;
+}
+
+#header-wrapper #search-form label,#header-wrapper #search-form--2 label {
+display:none;
+}
+
+#nav1 .menu li.last a,#header_sites a.last {
+background-image:none;
+}

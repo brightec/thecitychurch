@@ -1,0 +1,79 @@
+/*
+ * Footer Styles
+ */
+#footer-wrapper {
+background-image:url(../images/footer_background.jpg);
+background-position:center top;
+background-repeat:no-repeat;
+}
+
+#footer-container {
+background-color:#000;
+background-image:url(../images/footer_background.jpg);
+background-position:-10px 0;
+background-repeat:no-repeat;
+color:#FFF;
+font-size:12px;
+height:171px;
+position:relative;
+}
+
+#block-tccc-footer {
+color:#b3b3b3;
+margin:0 0 0 -10px;
+width:960px;
+}
+
+#block-tccc-footer a,#block-tccc-footer a:visited,#block-tccc-footer a:hover {
+color:#aadcf0;
+}
+
+#block-tccc-footer a:hover {
+text-decoration:underline;
+}
+
+#footer_text {
+color:#FFF;
+float:left;
+height:74px;
+line-height:77px;
+padding:0 0 0 54px;
+width:906px;
+}
+
+#footer_logos {
+position:absolute;
+right:37px;
+text-align:right;
+top:20px;
+width:164px;
+}
+
+#footer_logos img {
+display:block;
+float:left;
+margin:0 5px 0 0;
+}
+
+#footer_nf {
+clear:both;
+float:left;
+padding:45px 0 0 54px;
+width:905px;
+}
+
+#footer_nf img {
+float:left;
+margin:1px 20px 0 0;
+}
+
+#ccb-login-button a {
+background:url(../images/members-login.jpg) top left no-repeat;
+display:block;
+height:26px;
+position:absolute;
+right:77px;
+text-indent:-44000px;
+top:123px;
+width:88px;
+}

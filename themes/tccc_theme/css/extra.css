@@ -1,0 +1,15 @@
+
+
+/* html5 */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { 
+  display: block;
+}
+
+
+/* force grid elements to be visible */
+
+.layout-threenine .left,
+.layout-threenine .right {
+	min-height: 1px;
+}

@@ -1,0 +1,277 @@
+@font-face {
+    font-family: 'ChantillyRegular';
+    src: url('fonts/Chantilly-Regular-webfont.eot');
+    src: url('fonts/Chantilly-Regular-webfont.eot?iefix') format('eot'),
+         url('fonts/Chantilly-Regular-webfont.woff') format('woff'),
+         url('fonts/Chantilly-Regular-webfont.ttf') format('truetype'),
+         url('fonts/Chantilly-Regular-webfont.svg#webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ChantillyMedium';
+    src: url('fonts/Chantilly-Medium-webfont.eot');
+    src: url('fonts/Chantilly-Medium-webfont.eot?iefix') format('eot'),
+         url('fonts/Chantilly-Medium-webfont.woff') format('woff'),
+         url('fonts/Chantilly-Medium-webfont.ttf') format('truetype'),
+         url('fonts/Chantilly-Medium-webfont.svg#webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ChantillyBold';
+    src: url('fonts/Chantilly-Bold-webfont.eot');
+    src: url('fonts/Chantilly-Bold-webfont.eot?iefix') format('eot'),
+         url('fonts/Chantilly-Bold-webfont.woff') format('woff'),
+         url('fonts/Chantilly-Bold-webfont.ttf') format('truetype'),
+         url('fonts/Chantilly-Bold-webfont.svg#webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+body {
+    font-family: 'ChantillyRegular', Gill Sans, Gill Sans MT, sans-serif; 
+    font-size: 13px;
+		color: #3c3c3c;
+    line-height: 1.4;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+  text-transform: uppercase;
+  color: #2a4269;
+  font-size: 1.9em;
+  line-height: 3.7;
+}
+
+h2 {
+  color: #2a4269;
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+h3 {
+    font-size: 17px;
+    line-height: 27px;
+}
+h4 {
+    font-size: 16px;
+    line-height: 24px;
+}
+h5 {
+    font-size: 14px;
+    line-height: 21px;
+}
+h6 {
+    font-size: 12px;
+    line-height: 18px;
+}
+p {
+    margin: 9px 0;
+}
+
+body a {
+  color: #326aa9;
+  text-decoration: underline;
+}
+
+blockquote {
+  font-size: 20px;
+  color: #2a4269;
+}
+
+.footnote{
+	font-size:xx-small; 
+	vertical-align:top;
+	text-decoration: none;
+}
+
+ul.menu li, ul li, .item-list ul li, ol li {
+    margin-left: 14px;
+}
+
+ul.menu, body ul, .item-list ul, body ol {
+    margin:  0;
+    padding: 0;
+}
+
+
+.pane-standard-header h1 {
+  line-height: normal;
+  color: #2a4269;
+}
+
+.pane-standard-header h2 {
+  color: #000000;
+}
+
+
+#calendar .day-number-1 {
+  color: #bfbfbf;
+}
+
+
+#block-tccc-header a {
+  text-decoration: none;
+}
+
+#header-wrapper #search-form #edit-submit,
+#header-wrapper #search-form--2 #edit-submit--3, #header-wrapper #search-form--2 #edit-submit--2 {
+  font-size: 13px;
+  color: #fff;
+}
+
+
+#nav1 .depth-3 a {
+  text-transform: none;
+  color: #5C7696;
+  display: block;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+#nav1 .depth-3 a:hover {
+  background: #c7daf3;
+  color: #2a4269;
+}
+
+.category-link {
+    color: #000000;
+    font-weight: 400;
+    line-height: 2;
+    text-transform: uppercase;
+}
+
+
+/* Resources section */
+
+ .pane-resources-header a {
+  text-decoration: none;
+}
+
+ .pane-resources-header a:hover {
+  text-decoration: none;
+}
+
+.page-resources .pane-resources-header .subnav li a {
+    color: #808080;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.pane-media-landing-boxes .pane-title{
+  text-transform: uppercase;
+}
+
+/* media item */
+.media-section a.notes{
+  text-indent: -44000px;
+}
+
+.layout-eightfourmedia h1{
+  text-transform: none;
+  font-size: 1.6em;
+  line-height: 1;
+}
+
+.layout-eightfourmedia h2 {
+  font-size: 15px;
+  color: #000;
+  text-transform: none;
+}
+
+.pane-mediaitem-info .description h2 {
+  line-height: 1;
+}
+
+.pane-media-tags a{
+  color: #333;
+}
+
+.pane-sermon-downloads span {
+  text-transform: uppercase;
+  font-size: 1.3em;
+}
+
+.pane-sermon-downloads a {
+  color: #fff;
+  font-size: 1.1em;
+  text-decoration: none;
+  line-height: 1;  
+}
+
+/* Calednar page */
+.calendar-actions a {
+  text-indent: -44000px;
+}
+
+.promoted-event .detail span {
+	font-family: 'ChantillyBold', Gill Sans, Gill Sans MT, sans-serif;;
+	color: black;
+}
+
+.promoted-event .detail h3 {
+  font-family: 'ChantillyBold', Gill Sans, Gill Sans MT, sans-serif;;
+  color: black;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+
+/* Resource Content Page */
+.pane-resources-sidebar h2 {
+  text-align: center;
+  text-transform: uppercase;
+  color: #430606;
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.media h2 {
+  font-size: 1.3em;
+  line-height: 1.4em;
+}
+
+.media h2 a {
+  text-decoration: none;
+}
+
+
+
+/* Discipleship */
+
+.pane-discipleship-topics h2 {
+  text-align: center;
+  font-size: 1.65em;
+}
+
+.pane-discipleship-topics h3 {
+  text-align: center;
+  color: #000;
+}
+
+.pane-discipleship-text .field-name-field-summary {
+  color: #000;
+}
+
+.layout-discipleshiptopic h2 {
+  text-align: center;
+}
+
+.pane-related-content a {
+  text-align: center;
+}
+
+/* content page */
+
+.page-node #block-system-main strong{
+  font-family: 'ChantillyBold', Gill Sans, Gill Sans MT, sans-serif;;
+  font-weight: normal;
+}

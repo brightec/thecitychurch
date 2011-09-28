@@ -1,0 +1,30 @@
+name = TCCC Final Theme
+description = Extends TCCC base theme
+core = 7.x
+base theme = sausage
+
+stylesheets[all][] = css/prettyPhoto.css
+stylesheets[all][] = css/navigation.css
+stylesheets[all][] = css/styles.css
+stylesheets[all][] = css/footer.css
+stylesheets[all][] = css/typography.css
+stylesheets[all][] = fullcalendar/fullcalendar.css
+stylesheets[all][] = css/extra.css
+
+scripts[] = js/jquery-1.6.2.min.js
+scripts[] = js/modernizr-audio.js
+scripts[] = js/audio-player.js
+scripts[] = js/jquery.prettyPhoto.js
+scripts[] = js/jquery.cycle.all.min.js
+scripts[] = fullcalendar/fullcalendar.js
+scripts[] = js/jquery.hoverIntent.minified.js
+scripts[] = js/jquery.qtip-1.0.0-rc3.min.js
+scripts[] = js/tccc.js
+scripts[] = js/media.js
+
+
+regions[header] = Header
+regions[content] = Content
+regions[footer] = Footer
+
+plugins[panels][layouts] = layouts
