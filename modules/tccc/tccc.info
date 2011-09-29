@@ -15,7 +15,6 @@ dependencies[] = entity
 dependencies[] = field_collection
 dependencies[] = field_group
 dependencies[] = file_entity
-dependencies[] = googleanalytics
 dependencies[] = imagecache_actions
 dependencies[] = link
 dependencies[] = media
