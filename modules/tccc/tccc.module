@@ -138,7 +138,6 @@ function makeClickableLinks($text) {
 return $text;
 }
 
-
 function _tccc_get_feed($url){
   $ch = curl_init();
   //curl_setopt($ch, CURLOPT_POSTFIELDS,  $encoded);  
@@ -157,51 +156,40 @@ function _tccc_get_feed($url){
 }
 
 function _tccc_ccb_events() {
- 
-  $dom = _tccc_get_feed("https://thecitychurch.ccbchurch.com/api.php?srv=event_profiles&modified_since=2010-04-01");
-  $events = $dom->getElementsByTagName('event');
-  
-  $dom = _tccc_get_feed( "https://thecitychurch.ccbchurch.com/api.php?srv=group_profiles" );
-  $groups = $dom->getElementsByTagName('group');
-  
-  $listed_groups = array();
-  foreach($groups as $group){
-    
-    $id = $group->getAttribute('id');
-    $listed = $group->getElementsByTagName('listed')->item(0)->nodeValue;    
-    
-    if($listed == 'true'){
-      $listed_groups[$id] = $id;
-    }
-    
-  }
-  
-  
-  foreach($events as $event){
-    
-    $group_id = $event->getElementsByTagName("group")->item(0)->getAttribute("id");
-    
-    if( in_array($group_id, $listed_groups) ){
 
-      $rec = $event->getElementsByTagName('recurrence_description')->item(0)->nodeValue;
-      
-      
-      $id = $event->getAttribute('id');
-      $title = $event->getElementsByTagName('name')->item(0)->nodeValue;
-			$description = $event->getElementsByTagName('description')->item(0)->nodeValue; 
-      $start = date('c', strtotime($event->getElementsByTagName('start_datetime')->item(0)->nodeValue));
-      $end = date('c', strtotime($event->getElementsByTagName('end_datetime')->item(0)->nodeValue));
 
-      $elements[] = array(
-          'id' => $id,
-					'description' => $description,
-          'title' => $title,
-          'start' => $start,
-          'end' => $end
-      );
-    }
-  }
-   
+	$dom = _tccc_get_feed( 'https://thecitychurch.ccbchurch.com/api.php?srv=public_calendar_listing&date_start=2011-01-01&date_end=2013-01-01' );
+	$items = $dom->getElementsByTagName('item');
+	$elements = array();
+	
+	
+	foreach($items as $item) {
+		
+		$id = $item->getElementsByTagName('event_name')->item(0)->getAttribute('ccb_id');
+		
+	  $title = $item->getElementsByTagName('event_name')->item(0)->nodeValue;
+		$description = $item->getElementsByTagName('event_description')->item(0)->nodeValue; 
+		
+		$date = $item->getElementsByTagName('date')->item(0)->nodeValue;
+		
+		
+		$start_stamp = $date . 'T' . $item->getElementsByTagName('start_time')->item(0)->nodeValue;
+		$start_stamp = strtotime($start_stamp);
+			
+		$end_stamp =  $date . ' ' . $item->getElementsByTagName('end_time')->item(0)->nodeValue;
+		$end_stamp = strtotime($end_stamp);
+		
+		
+    $elements[] = array(
+    	'id' => $id,
+			'description' => $description,
+			'title' => $title,
+		  'start' => $start_stamp,
+      'end' => $end_stamp,
+    );
+		
+	}			
+	//print_r($elements);
   print json_encode($elements);
   exit;                   
 }
