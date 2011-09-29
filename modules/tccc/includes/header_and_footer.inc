@@ -15,7 +15,7 @@ function _tccc_header() {
   $output .= '<div class="b">';  
   $output .= drupal_render(drupal_get_form('search_form') );
   $output .= '<div id="header_sites">';
-  $output .= '<a class="canterbury first" href="/cantebury">canterbury</a>';
+  $output .= '<a class="canterbury first" href="/canterbury">canterbury</a>';
   $output .= '<a class="whitstable last" href="/whitstable">whitstable</a>';
   $output .= '<div id="footer_tag">one church, two locations</div>';
   $output .= '</div>';
@@ -46,7 +46,7 @@ function _tccc_footer() {
   $output .= '<div class="b">';
   
   $output .= '<div id="footer_text">';
-  $output .='The City Church meets in <a href="/cantebury">Canterbury</a> and <a href="/whitstable">Whitstable</a>&nbsp;&nbsp;&nbsp;Email: <a href="mailto:info@thecitychurch.org.uk">info@thecitychurch.org.uk</a>&nbsp;&nbsp;&nbsp;Tel: 01227 455440&nbsp;&nbsp;&nbsp;<a href="/website-credits">Website Credits</a>';
+  $output .='The City Church meets in <a href="/canterbury">Canterbury</a> and <a href="/whitstable">Whitstable</a>&nbsp;&nbsp;&nbsp;Email: <a href="mailto:info@thecitychurch.org.uk">info@thecitychurch.org.uk</a>&nbsp;&nbsp;&nbsp;Tel: 01227 455440&nbsp;&nbsp;&nbsp;<a href="/website-credits">Website Credits</a>';
   
   $output .='<div id="footer_logos">';
   $output .='<a href="http://www.facebook.com/thecitychurchcanterbury"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_fb.png" alt="Find us on Facebook"></a>';
