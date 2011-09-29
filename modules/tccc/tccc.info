@@ -16,7 +16,6 @@ dependencies[] = field_collection
 dependencies[] = field_group
 dependencies[] = file_entity
 dependencies[] = googleanalytics
-dependencies[] = htmlpurifier
 dependencies[] = imagecache_actions
 dependencies[] = imce
 dependencies[] = imce_wysiwyg
