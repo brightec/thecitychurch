@@ -58,10 +58,10 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
     $result->bible = $tokens[2];
   }
   
-  // stop view showing with all rows
-  if ($result->bundle == 'sermon' && empty($tokens[2])) {
-    $result->nid = -1;
-  }
+  // to make the view show no rows instead of all rows, pass in a non-existent nid here
+  //if ($result->bundle == 'sermon' && empty($tokens[2])) {
+  //  $result->nid = -1;
+  //}
   
   $context = ctools_context_create('resource_filter', $result);
   $context->original_argument = $arg;
