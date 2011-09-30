@@ -17,10 +17,7 @@ body {
 
 .focus_block .block{
   text-align: left;
-  display: inline;
-}
-
-.focus_block p {
+  display: block;
 }
 
 .action {
@@ -68,13 +65,8 @@ hr {
   display:none;
 }
 
-label, .focus_block h2 {
-  display: inline;
-  background-color: #2a4269;
-  padding: 5px;
-  margin: 0px;
-  color: white;
-  border: none;
+.focus_block h2 {
+  text-align: left;
 }
 
 label span {
@@ -87,15 +79,21 @@ input, textarea {
   margin: 0px;
   margin-left: -3px;
   border: none;
-	width: 57%;
   display: inline;
 }
 
+
+label {
+	margin-right: 10px;
+	color: #2a4269;
+}
+
+input[type="text"],
 textarea {
   width: 97%;
 }
 
-.focus_block input {
+.focus_block input[type="text"] {
   height: 15px;
 }
 

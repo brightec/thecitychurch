@@ -117,7 +117,7 @@ function _ccb_alter_html($str, $form_id) {
   // add in our own stylesheet (by replacing the <title> element)
   $title = $dom->find('title');
   foreach ($title as $item) {
-    $item->outertext = '<link rel="stylesheet" href="/' . drupal_get_path('theme', 'tccc_final') . '/css/typography.css" />'.
+    $item->outertext = '<link rel="stylesheet" href="/' . drupal_get_path('theme', 'tccc_theme') . '/css/typography.css" />'.
     '<link rel="stylesheet" href="/' . drupal_get_path('module', 'ccb_forms') . '/ccb_forms.css" />';
   }
   
