@@ -290,12 +290,7 @@ function tccc_default_page_manager_handlers() {
       'column-3' => NULL,
       'wide' => NULL,
       'heading' => NULL,
-      'main' => array(
-        'element' => 'article',
-      ),
-    ),
-    'main' => array(
-      'style' => 'grid',
+      'main' => NULL,
     ),
   );
   $display->cache = array();
