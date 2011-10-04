@@ -85,7 +85,7 @@ z-index:500;
 #nav1 .depth-2 {
 background: #d2e2f6;
 border: 1px solid #b7d0ee;
-height: 361px;
+min-height: 361px;
 left: -11px;
 overflow: hidden;
 padding: 7px;
