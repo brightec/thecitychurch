@@ -119,22 +119,22 @@ $(document).ready(function(){
 		$(this).hide();
 		$(".audio-player").show();
 		$(".video-toggle").show();
+    return false;
   });
 
 	// Hide Audio / Show Video
-  $(".video-toggle").click(function () {
+  $(".video-toggle").click(function (e) {
     $(".video").show();
 		$(this).hide();
-		
 		$(".audio-player").hide();
 		$(".audio-toggle").show();
+		return false;
   });
 	
 	// if no video, only show audio
 	if (!$(".video").length ) {
 	  $('.audio-player').show();
 		$(".audio-toggle").hide();
-		$(".notes").css('margin-top', '180px');		
 	}
 
 
@@ -146,13 +146,11 @@ $(document).ready(function(){
 	// if no audio player
 	if (!$(".audio-player").length ) {
 		$(".audio-toggle").hide();
-		$(".notes").css('margin-top', '180px');		
 	}
 	
 	// If no audio & no video, hide media box
 	if (!$(".audio-player").length && !$(".video").length) {
 		$(".pane-sermon-multimedia").hide();
-		$(".notes").css('float', 'right');	
 	}	
 
    

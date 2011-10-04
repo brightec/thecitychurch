@@ -361,29 +361,39 @@ text-align:center;
 }
 
 .media-section .video {
-float:left;
-margin-bottom:-5px;
+position: absolute;
+top: 6px;
+left: 5px;
 width:640px;
+height: 360px;
 }
 
 .media-section a {
 display:block;
-float:left;
 height:180px;
 width:180px;
 }
 
 .media-section a.notes {
 background:url(../images/notes-icon.png) top left no-repeat;
+position: absolute;
+bottom: 6px;
+right: 5px;
 }
 
 .media-section a.audio-toggle {
 background:url(../images/audio-icon.png) top left no-repeat;
+position: absolute;
+top: 6px;
+right: 5px;
 }
 
 .media-section a.video-toggle {
 background:url(../images/video-icon.png) top left no-repeat;
 display:none;
+position: absolute;
+top: 6px;
+right: 5px;
 }
 
 .media-section .no-media {
@@ -409,6 +419,8 @@ background:url(../images/media-frame.png) top left no-repeat;
 margin:0 -6px;
 padding:6px 5px;
 width:820px;
+height:360px;
+position: relative;
 }
 
 .pane-sermon-multimedia img {
@@ -418,9 +430,10 @@ width:640px;
 
 .media-section .audio-player {
 display:none;
-float:left;
+position:absolute;
+top: 6px;
+left: 5px;
 height:360px;
-position:relative;
 width:640px;
 }
 
@@ -431,10 +444,6 @@ margin:0;
 padding:0;
 position:absolute;
 width:620px;
-}
-
-.pane-sermon-downloads {
-margin-left:-180px;
 }
 
 .pane-sermon-downloads span {
