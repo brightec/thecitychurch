@@ -175,7 +175,7 @@ ul.menu, body ul, .item-list ul, body ol {
   text-indent: -44000px;
 }
 
-.layout-eightfourmedia h1{
+.layout-eightfourmedia .media-section h1{
   text-transform: none;
   font-size: 1.6em;
   line-height: 1;
