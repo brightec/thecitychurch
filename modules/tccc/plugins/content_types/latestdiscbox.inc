@@ -22,11 +22,14 @@ function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context
       $output .= l($img, 'node/' . $topic->nid, array('html' => TRUE, 'attributes' => array('class' => array('box-image'))));
       
       $output .= '<div class="text">';
-      $output .= '<div>' . l($topic->title, 'discipleship') . '</div>';
+      $output .= '<div>' . l($topic->title, 'node/' . $topic->nid) . '</div>';
       $output .= '<div>' . date('l jS F Y', $topic->created) . '</div>';
       
-      $person = (!empty($topic->field_person)) ? taxonomy_term_load($topic->field_person['und'][0]['tid']): '';
-      $output .= '<div>by ' . l(check_plain($person->name), 'taxonomy/term/' . $person->tid) . '</div>' ;
+      if (!empty($topic->field_person)) {
+        $person = taxonomy_term_load($topic->field_person['und'][0]['tid']);
+        $output .= '<div>by ' . check_plain($person->name) . '</div>';
+      }
+
       $output .= '</div>';
     }
     
