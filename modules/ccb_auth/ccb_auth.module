@@ -133,20 +133,31 @@ function ccb_auth_user_login_validate($form, &$form_state) {
       $group_link[$key] = $val;
     }
     
+    // Load all existing roles into the editing array
     $edit = array(
-      'roles' => array(),
+      'roles' => $account->roles,
     );
     
     $admin_role_id = variable_get('user_admin_role', 0);
-    
-    // Check if the users' groups need assigning to a Drupal role
-    foreach ($groups->response->individuals->individual->groups->group as $group) {
-      $group_id = (int) $group->id;
-      // Check if this group is paired with a role
-      if (isset($group_link[$group_id])) {
-        $role_id = $group_link[$group_id];
-        // Don't allow people to pair with the admin role
-        if ($role_id != $admin_role_id) $edit['roles'][$role_id] = $role_id;
+
+    // Loop through group memberships returned from CCB, generate an array.
+    $ccb_groups = array();
+    foreach ($groups->response->individuals->individual->groups->group as $group) { 
+      $ccb_groups[] = (int) $group->id;
+    }
+
+    // Loop through all of our Drupal / CCB sync pairs.
+    foreach($group_link as $ccb_id => $drupal_id){
+      // Add any roles which ARE synchronised with CCB, and ARE NOT already associated.
+      // (e.g. a user has a group on CCB, but does not have the synchronised role in Drupal)
+      if(in_array($ccb_id, $ccb_groups) && !in_array($drupal_id, $edit['roles'])){
+        if ($role_id != $admin_role_id) $edit['roles'][$drupal_id] = $drupal_id;
+      }
+
+      // Remove any roles which ARE synchronised with CCB and ARE already paired but ARE NOT associated in CCB.
+      // (e.g. removes users from roles in Drupal when they are no longer a part of the CCB group)
+      if(in_array($drupal_id, $edit['roles']) && !in_array($ccb_id, $ccb_groups)){
+        unset($edit['roles'][$drupal_id]);
       }
     }
     
