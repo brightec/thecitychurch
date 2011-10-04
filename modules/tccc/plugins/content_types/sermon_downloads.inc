@@ -24,9 +24,10 @@ function tccc_sermon_downloads_content_type_render($subtype, $conf, $args, $cont
   foreach (field_get_items('node', $node, 'field_audio_file') as $item) {
     $output .= l('Audio only', file_create_url($item['uri']), array('attributes' => array('class' => array('audio'))));
   }
-  
+
+  $caption = $node->type == 'paper' ? 'Paper' : 'Notes';
   foreach (field_get_items('node', $node, 'field_notes_file') as $item) {
-    $output .= l('Notes', file_create_url($item['uri']), array('attributes' => array('class' => array('notes'))));
+    $output .= l($caption, file_create_url($item['uri']), array('attributes' => array('class' => array('notes'))));
   }
   
   $block = new stdClass;
