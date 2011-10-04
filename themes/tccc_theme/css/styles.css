@@ -63,12 +63,12 @@ margin:0 0 24px;
 text-transform:uppercase;
 }
 
-#header-wrapper #search-form,#header-wrapper #search-form--2 {
+#block-tccc-header .search-form {
 margin:0 auto 30px;
 width:200px;
 }
 
-#header-wrapper #search-form #edit-submit,#header-wrapper #search-form--2 #edit-submit--3,#header-wrapper #search-form--2 #edit-submit--2 {
+#block-tccc-header .search-form .form-submit {
 padding-bottom:3px;
 padding-left:4px;
 }

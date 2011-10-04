@@ -122,8 +122,7 @@ ul.menu, body ul, .item-list ul, body ol {
   text-decoration: none;
 }
 
-#header-wrapper #search-form #edit-submit,
-#header-wrapper #search-form--2 #edit-submit--3, #header-wrapper #search-form--2 #edit-submit--2 {
+#block-tccc-header .search-form .form-submit {
   font-size: 13px;
   color: #fff;
 }

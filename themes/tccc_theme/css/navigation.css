@@ -25,24 +25,21 @@ text-align:center;
 color:#b7b7b7;
 }
 
-#header-wrapper #search-form #edit-keys,#header-wrapper #search-form--2 #edit-keys--2 {
+#block-tccc-header .search-form #edit-keys {
 background-image:url(../images/search_03.jpg);
 border:0;
 float:left;
 height:23px;
 padding:0 0 0 10px;
 width:156px;
-}
-
-#search-form #edit-submit {
 cursor:pointer;
 }
 
-#search-form #edit-keys:focus {
+#block-tccc-header .search-form .form-submit:focus {
 outline:none;
 }
 
-#header-wrapper #search-form #edit-submit,#header-wrapper #search-form--2 #edit-submit--3,#header-wrapper #search-form--2 #edit-submit--2 {
+#block-tccc-header .search-form .form-submit {
 background-image:url(../images/go-button_04.jpg);
 border:0;
 float:left;
