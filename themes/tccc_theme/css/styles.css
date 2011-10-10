@@ -653,36 +653,37 @@ padding:18px 0;
 }
 
 /* content pages */
-.node-type-page .layout-twelve .pane-standard-header,.node-type-page .layout-threesixthree .pane-standard-header,.node-type-page .layout-fiveseven .pane-standard-header {
+.node-type-discipleship-topic .pane-standard-header,
+.node-type-page .layout-twelve .pane-standard-header,
+.node-type-page .layout-threesixthree .pane-standard-header,
+.node-type-page .layout-fiveseven .pane-standard-header {
 background-color:#fafafa;
 margin-bottom:20px;
 margin-left:-10px;
 }
 
 .node-type-page .layout-twelve .pane-standard-header {
-padding:0 30px;
+padding: 35px 30px 30px 30px;
 width:900px;
 }
 
 .node-type-page .layout-threesixthree .pane-standard-header {
-padding-left:250px;
+padding: 35px 0 30px 250px;
 width:710px;
 }
 
+.node-type-discipleship-topic .pane-standard-header,
 .node-type-page .layout-fiveseven .pane-standard-header {
-padding-bottom:25px;
-padding-left:410px;
+padding: 35px 0 30px 410px;
 width:550px;
 }
 
 .pane-standard-header h1 {
 line-height:normal;
-padding-top:35px;
 }
 
 .pane-standard-header h2 {
 font-size:13px;
-padding-bottom:30px;
 }
 
 .layout-fiveseven .panel-left {
