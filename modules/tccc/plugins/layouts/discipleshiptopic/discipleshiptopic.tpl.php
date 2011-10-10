@@ -9,7 +9,7 @@
 
 <article class="layout-discipleshiptopic panel-display clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
 
-  <div class="header grid_7 prefix_5 alpha omega">
+  <div class="header">
     <?php print $content['header']; ?>
   </div>
   
