@@ -43,6 +43,9 @@ function tccc_related_content_content_type_render($subtype, $conf, $args, $conte
             
             if($tag['tid'] == $node->field_tags['und'][0]['tid']){
               
+              $output .= '<div class="related-content-item">';
+              $output .= '<div class="related-content-item-inner">';
+
               switch($media->type){
                 
                 case 'sermon':
@@ -65,6 +68,9 @@ function tccc_related_content_content_type_render($subtype, $conf, $args, $conte
                   break;
               }
               
+              $output .= '</div>';
+              $output .= '</div>';
+
             }
           }
           
