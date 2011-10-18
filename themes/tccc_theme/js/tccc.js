@@ -194,7 +194,7 @@ $(document).ready(function(){
       },
 	    eventRender: function(event, element) {
 					console.log(event);
-					var sd = event._end;
+					var sd = event._start;
 					
 				  var sminutes = sd.getMinutes();
 				  var shours = sd.getHours();
