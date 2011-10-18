@@ -638,18 +638,18 @@ margin-left:39px;
 padding:10px;
 }
 
-.pane-related-content .sermon {
+.pane-related-content .related-content-item {
 border:0 solid #e2e3e5;
 border-width:1px 0;
 margin:4px 0;
 }
 
-.pane-related-content .sermon a {
+.pane-related-content .related-content-item-inner {
 background:#eeeff1;
 border:0 solid #feffff;
 border-width:1px 0;
 display:block;
-padding:18px 0;
+padding:18px 24px;
 }
 
 /* content pages */
