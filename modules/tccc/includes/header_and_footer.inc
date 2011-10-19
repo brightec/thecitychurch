@@ -62,7 +62,7 @@ function _tccc_footer() {
   $output .='</div>';
 
   $output .= '<div id="ccb-login-button">';
-  $output .= l('Login', 'https://thecitychurch.ccbchurch.com/login.php', array('attributes' => array('target' => '_blank')));
+  $output .= l('Login', 'ccb', array());
   $output .= '</div>';
 
   
