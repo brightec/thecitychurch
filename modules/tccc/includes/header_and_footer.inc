@@ -49,15 +49,15 @@ function _tccc_footer() {
   $output .='The City Church meets in <a href="/canterbury">Canterbury</a> and <a href="/whitstable">Whitstable</a>&nbsp;&nbsp;&nbsp;Email: <a href="mailto:info@thecitychurch.org.uk">info@thecitychurch.org.uk</a>&nbsp;&nbsp;&nbsp;Tel: 01227 455440&nbsp;&nbsp;&nbsp;<a href="/website-credits">Website Credits</a>';
   
   $output .='<div id="footer_logos">';
-  $output .='<a href="http://www.facebook.com/thecitychurchcanterbury"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_fb.png" alt="Find us on Facebook"></a>';
-  $output .='<a href="http://twitter.com/citychurchcbury"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_twitter.png" alt="Follow us on Twitter"></a>';
-  $output .='<a href="http://feeds.feedburner.com/tccc-update"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_rss.png" alt="RSS"></a>';
-  $output .='<a href="/resources"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_audio.png" alt="Audio"></a>';
+  $output .='<a href="http://www.facebook.com/thecitychurchcanterbury"><img src="'.base_path().'profiles/thecitychurch/themes/tccc_theme/images/footer_fb.png" alt="Find us on Facebook"></a>';
+  $output .='<a href="http://twitter.com/citychurchcbury"><img src="'.base_path().'profiles/thecitychurch/themes/tccc_theme/images/footer_twitter.png" alt="Follow us on Twitter"></a>';
+  $output .='<a href="http://feeds.feedburner.com/tccc-update"><img src="'.base_path().'profiles/thecitychurch/themes/tccc_theme/images/footer_rss.png" alt="RSS"></a>';
+  $output .='<a href="/resources"><img src="'.base_path().'profiles/thecitychurch/themes/tccc_theme/images/footer_audio.png" alt="Audio"></a>';
   $output .='</div>';
   $output .='</div>';
 
   $output .='<div id="footer_nf">';
-  $output .='<a href="http://www.newfrontierstogether.org/"><img src="'.base_path().'sites/default/themes/tccc_theme/images/footer_nf.png" alt="Newfrontiers"></a>';
+  $output .='<a href="http://www.newfrontierstogether.org/"><img src="'.base_path().'profiles/thecitychurch/themes/tccc_theme/images/footer_nf.png" alt="Newfrontiers"></a>';
   $output .='The City Church Canterbury is a company limited by guarantee<br>Company Number 06732225, Registered Charity Number 1130031';
   $output .='</div>';
 

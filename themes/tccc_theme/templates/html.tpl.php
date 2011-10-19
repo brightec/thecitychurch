@@ -47,7 +47,7 @@
   <?php print $head; ?>
   <title><?php print $head_title; ?></title>
   <?php print $styles; ?>
-  <!--[if lt IE 9]><script src="/sites/default/themes/tccc_theme/js/html5.js"></script><![endif]-->
+  <!--[if lt IE 9]><script src="/profiles/thecitychurch/themes/tccc_theme/js/html5.js"></script><![endif]-->
 
   <?php print $scripts; ?>
 

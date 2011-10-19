@@ -98,7 +98,7 @@ $(document).ready(function(){
 		$(".audio-player").append("<a href="+fileref+" id=\"player\"></a>");
 	}
 
-  AudioPlayer.setup("/sites/default/themes/tccc_theme/player.swf", {width: 640});
+  AudioPlayer.setup("/profiles/thecitychurch/themes/tccc_theme/player.swf", {width: 640});
     
   $(".audio-toggle").one("click", function(e) {
     e.preventDefault();
