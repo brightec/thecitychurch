@@ -155,7 +155,7 @@ function theme_media($variables) {
 
     $output = '<div class="media">';
     
-    $output .= '<h2>' . l(check_plain($item->title), 'node/' . $item->vid) . '</h2>';
+    $output .= '<h2>' . l($item->title, 'node/' . $item->vid) . '</h2>';
     $output .= '<span class="name">' . $person->name . '</span>';
     $output .= !(empty($item->field_recording_date)) ? ' &#124; <span class="date">' . date('l jS F Y',strtotime($item->field_recording_date['und'][0]['value'])) . '</span>' : '';
     $output .= !(empty($item->field_media_length)) ? ' &#124; <span class="length">' . $item->field_media_length['und'][0]['value'] . '</span>' : ''; 
