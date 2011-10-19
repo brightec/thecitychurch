@@ -347,6 +347,7 @@ function theme_event($variables) {
 	  $output .= !empty($event->field_event_date) ? '<div class="when"><span>When: </span>' . date('jS F Y @ g:ia,', strtotime($event->field_event_date['und'][0]['value'])) . '</div>' : '';
 	  $output .= !empty($event->field_event_location) ? '<div class="where"><span>Where: </span>' . $event->field_event_location['und'][0]['safe_value'] . '</div>' : '';
 	  $output .= !empty($event->field_event_cost) ? '<div class="vost"><span>Cost: </span>' . $event->field_event_cost['und'][0]['safe_value'] . '</div>' : '';
+	  $output .= !empty($event->field_event_contact) ? '<div class="contact"><span>Contact: </span>' . $event->field_event_contact['und'][0]['safe_value'] . '</div>' : '';
 	  $output .= '</div>';
 	  $output .= '</div>';
 	  $output .= '</div>';
