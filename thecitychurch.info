@@ -1,0 +1,6 @@
+name = The City Church
+description = The City Church Profile
+core = 7.x
+
+dependencies[] = tccc
+
