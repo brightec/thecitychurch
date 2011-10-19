@@ -339,7 +339,11 @@ function theme_event($variables) {
 		}
     $output .= '<div class="detail">';
 	  $output .= '<h3>' . $event->title . '</h3>';
-	  $output .= !empty($event->field_summary) ? '<div class="summary">' . $event->field_summary['und'][0]['safe_value'] . '</div>' : '';
+	  if (!empty($event->field_summary)) {
+	    $output .= '<div class="summary">';
+	    $output .= drupal_render(field_view_field('node', $event, 'field_summary', array('label' => 'hidden')));
+	    $output .= '</div>';
+	  }
 	  $output .= !empty($event->field_event_date) ? '<div class="when"><span>When: </span>' . date('jS F Y @ g:ia,', strtotime($event->field_event_date['und'][0]['value'])) . '</div>' : '';
 	  $output .= !empty($event->field_event_location) ? '<div class="where"><span>Where: </span>' . $event->field_event_location['und'][0]['safe_value'] . '</div>' : '';
 	  $output .= !empty($event->field_event_cost) ? '<div class="vost"><span>Cost: </span>' . $event->field_event_cost['und'][0]['safe_value'] . '</div>' : '';
