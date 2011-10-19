@@ -29,7 +29,7 @@ function tccc_latestseriesbox_content_type_render($subtype, $conf, $args, $conte
     }
   }
   
-  $path = 'resources/sermons/series/' . $series->tid;
+  $path = 'resources/sermon/series/' . $series->tid;
   $output = '';
   if ($img) {
     $img .= '<div class="shine-resource-button"></div>';
