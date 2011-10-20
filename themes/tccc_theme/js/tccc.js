@@ -3,6 +3,7 @@
  * Media site
  */
 
+
 $(document).ready(function(){
 	
   /* 
@@ -111,16 +112,16 @@ $(document).ready(function(){
 			animation: 'no'
     });  
   });
-  
+ 
 
 	// Show Audio / Hide Video
-  $(".audio-toggle").click(function () {
+	  $(".audio-toggle").click(function () {
     $(".video").hide();
 		$(this).hide();
 		$(".audio-player").show();
 		$(".video-toggle").show();
     return false;
-  });
+	  });
 
 	// Hide Audio / Show Video
   $(".video-toggle").click(function (e) {
