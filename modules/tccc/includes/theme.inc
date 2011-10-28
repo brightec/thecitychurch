@@ -333,7 +333,7 @@ function theme_event($variables) {
 	$event = $variables['event'];
 	if(count($event) > 0) {
 	  $output .= '<div class="promoted-event">';
-	  $output .= '<div class="promoted-event-inner">';
+	  $output .= '<div class="promoted-event-inner clearfix">';
 	  $output .= '<div class="details">';
 		if($image = $event->field_event_image['und'][0]){
 	  $output .= '<div class="image">';
