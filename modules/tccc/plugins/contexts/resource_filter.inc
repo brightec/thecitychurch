@@ -45,7 +45,7 @@ function tccc_context_resource_filter_convert_list() {
     'tag' => t('Tag'),
     'series' => t('Series'),
   	'person' => t('Person'),
-    'scripture' => t('Scripture'),
+    'bible' => t('Bible'),
     'nid' => t('Dummy node ID'),
   );
 }
@@ -65,8 +65,8 @@ function tccc_context_resource_filter_convert($context, $type) {
       return !empty($context->data->series) ? $context->data->series : 'all';
     case 'person':
       return !empty($context->data->person) ? $context->data->person : 'all';
-    case 'scripture':
-      return !empty($context->data->scripture) ? $context->data->scripture : 'all';
+    case 'bible':
+      return !empty($context->data->bible) ? $context->data->bible : 'all';
     case 'nid':
       return !empty($context->data->nid) ? $context->data->nid : NULL;
   }

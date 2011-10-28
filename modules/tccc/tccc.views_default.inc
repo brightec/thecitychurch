@@ -216,7 +216,7 @@ function tccc_views_default_views() {
     ),
     'field_scriptures_book' => array(
       'type' => 'context',
-      'context' => 'resource_filter.scripture',
+      'context' => 'resource_filter.bible',
       'context_optional' => 0,
       'panel' => '0',
       'fixed' => '',
