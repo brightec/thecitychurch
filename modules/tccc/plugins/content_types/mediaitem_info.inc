@@ -27,7 +27,11 @@ function tccc_mediaitem_info_content_type_render($subtype, $conf, $args, $contex
       $output .= '<span>' . $series->name . '</span>';
     }    
 
-    $output .= !(empty($sermon->field_scriptures)) ? ' &#124; <span>' . $sermon->field_scriptures['und'][0]['safe_value'] . '</span>' : '';
+    $bible = _tccc_linked_bible_references('node', $sermon, 'field_scriptures');
+    if (!empty($bible)) {
+      $output .= ' &#124; <span class="bible">' . $bible . '</span>';
+    }
+
     $output .= '</div>';
     
     if (!(empty($sermon->field_main_text))){

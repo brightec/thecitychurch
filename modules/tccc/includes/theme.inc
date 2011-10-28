@@ -165,7 +165,11 @@ function theme_media($variables) {
       $output .= ' &#124; <span class="series">' . $series->name . '</span>';
     }    
     
-    $output .= !(empty($item->field_scriptures)) ? ' &#124; <span class="bible">' . $item->field_scriptures['und'][0]['safe_value'] . '</span>' : '';
+    $bible = _tccc_linked_bible_references('node', $item, 'field_scriptures');
+    if (!empty($bible)) {
+      $output .= ' &#124; <span class="bible">' . $bible . '</span>';
+    }
+
     if (!empty($item->field_main_text)) {
       
       
