@@ -165,7 +165,7 @@ function theme_media($variables) {
       $output .= ' &#124; <span class="series">' . $series->name . '</span>';
     }    
     
-    $output .= !(empty($item->field_bible_references)) ? ' &#124; <span class="bible">' . $item->field_bible_references['und'][0]['safe_value'] . '</span>' : '';
+    $output .= !(empty($item->field_scriptures)) ? ' &#124; <span class="bible">' . $item->field_scriptures['und'][0]['safe_value'] . '</span>' : '';
     if (!empty($item->field_main_text)) {
       
       
