@@ -18,8 +18,8 @@ function tccc_sermon_multimedia_content_type_render($subtype, $conf, $args, $con
 
   foreach (field_get_items('node', $node, 'field_vimeo_id') as $item) {
     $output .= '<div class="video">';
-    $output .= '<iframe id="vimeo-player" src="http://player.vimeo.com/video/' . $item['safe_value'] . '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0" width="640" height="360"></iframe>';
-    $output .= '</div>';
+    $output .= '<iframe id="player_1" src="http://player.vimeo.com/video/' . $item['safe_value'] . '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0&amp;api=1&amp;player_id=player_1" width="640" height="360"></iframe>';
+    $output .= '</div>';		
   }
 
   foreach (field_get_items('node', $node, 'field_audio_file') as $item) {
@@ -39,9 +39,12 @@ function tccc_sermon_multimedia_content_type_render($subtype, $conf, $args, $con
 		$output .= '</audio>';
 		$output .= '</div>';
 				
-    $output .= '<a href="#" class="audio-toggle"></a>';
+		$output .= '<div id="video-audio-switch">';
+    $output .= '<a href="#" class="pause audio-toggle"></a>';
     $output .= '<a href="#" class="video-toggle"></a>';
-
+		$output .= '</div>';
+		$output .= '<script src="'.$base_url.'/profiles/thecitychurch/themes/tccc_theme/js/froogaloop2.min.js" type="text/javascript"></script>';
+		$output .= '<script src="'.$base_url.'/profiles/thecitychurch/themes/tccc_theme/js/vimeo-controls.js" type="text/javascript"></script>';
 
   }
   
