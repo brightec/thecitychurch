@@ -82,8 +82,11 @@ function _tccc_get_vocabulary_by_name($name) {
 
 
 function _tccc_linked_bible_references($entity_type, $entity, $field_name, $langcode = NULL) {
+  $values = array();
   foreach (field_get_items($entity_type, $entity, $field_name, $langcode) as $delta => $item) {
-    $values[$delta] = l($item['value'], 'bible/' . drupal_encode_path($item['safe_value']));
+    if ($item['value']) {
+      $values[$delta] = l($item['value'], 'bible/' . drupal_encode_path($item['safe_value']));
+    }
   }
   return implode(', ', $values);
 }
