@@ -132,7 +132,9 @@ function _tccc_resources_sidebar_series($filter) {
 
 function _tccc_resources_sidebar_person($filter) {
   
-  $sql = 'select distinct t.tid, t.name from {taxonomy_term_data} t, {field_data_field_person} p where t.tid = p.field_person_tid and p.entity_type = :entity_type and p.bundle = :bundle';
+  $sql = 'select distinct t.tid, t.name from {taxonomy_term_data} t, {field_data_field_person} p ' .
+    'where t.tid = p.field_person_tid and p.entity_type = :entity_type and p.bundle = :bundle ' .
+    'order by t.name';
   $params = array(
     'entity_type' => 'node',
     'bundle' => $filter->bundle,
