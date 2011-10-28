@@ -3,7 +3,6 @@
  * Media site
  */
 
-
 $(document).ready(function(){
 	
   /* 
@@ -91,37 +90,38 @@ $(document).ready(function(){
   });
   
 
-  //Audio player
-	var fileref = $("#player").attr('href');
+  // Audio player
 
-	if(!Modernizr.audio.mp3){
-		$(".html-audio-player").remove();
-		$(".audio-player").append("<a href="+fileref+" id=\"player\"></a>");
-	}
 
-  AudioPlayer.setup("/profiles/thecitychurch/themes/tccc_theme/player.swf", {width: 640});
-    
-  $(".audio-toggle").one("click", function(e) {
-    e.preventDefault();
+  // non mp3 support
 
+  if (!Modernizr.audio.mp3) {
+
+    // first move the #player link outside of .html-audio-player and remove .html-audio-player
+    var fileref = $("#player").attr('href');
+    var player = $('.html-audio-player #player').detach();
+    player.appendTo('.audio-player');
+    $(".html-audio-player").remove();
+
+    // turn #player into a flash object if we can
+    AudioPlayer.setup("/profiles/thecitychurch/themes/tccc_theme/player.swf", {width: 620});
     AudioPlayer.embed("player", {
-			width: 620,  
+      width: 620,
       soundFile: fileref,
       autostart: 'no',
-			transparentpagebg: 'yes',
-			animation: 'no'
-    });  
-  });
- 
+      transparentpagebg: 'yes',
+      animation: 'no'
+    });
+  }
 
 	// Show Audio / Hide Video
-	  $(".audio-toggle").click(function () {
+  $(".audio-toggle").click(function () {
     $(".video").hide();
 		$(this).hide();
 		$(".audio-player").show();
 		$(".video-toggle").show();
     return false;
-	  });
+  });
 
 	// Hide Audio / Show Video
   $(".video-toggle").click(function (e) {
@@ -138,12 +138,6 @@ $(document).ready(function(){
 		$(".audio-toggle").hide();
 	}
 
-
-		$('.ccb-iframe').load(function() {
-		  $(this).width($(this).parent().width());
-		});
-		
-
 	// if no audio player
 	if (!$(".audio-player").length ) {
 		$(".audio-toggle").hide();
@@ -154,7 +148,16 @@ $(document).ready(function(){
 		$(".pane-sermon-multimedia").hide();
 	}	
 
-   
+
+
+  // make sure CCB iframes are tall enough
+
+  $('.ccb-iframe').load(function() {
+    $(this).width($(this).parent().width());
+  });
+
+
+
   var top_menu = $('.pane-menu-menu-resource-library-menu ul.menu').first();
   top_menu.find('ul.menu').hide();
   
