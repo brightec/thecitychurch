@@ -120,7 +120,9 @@ $(document).ready(function(){
 		$(this).hide();
 		$(".audio-player").show();
 		$(".video-toggle").show();
-    return false;
+		var vimeoLink = $("#player_1").attr('src');
+		$("#player_1").attr('rel', vimeoLink);
+    $("#player_1").attr('src', '');
   });
 
 	// Hide Audio / Show Video
@@ -129,6 +131,9 @@ $(document).ready(function(){
 		$(this).hide();
 		$(".audio-player").hide();
 		$(".audio-toggle").show();
+		var vimeoLink = $("#player_1").attr('rel');
+		$("#player_1").attr('src', vimeoLink);
+    $("#player_1").attr('rel', '');
 		return false;
   });
 	

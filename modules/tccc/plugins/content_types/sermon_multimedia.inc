@@ -43,8 +43,6 @@ function tccc_sermon_multimedia_content_type_render($subtype, $conf, $args, $con
     $output .= '<a href="#" class="pause audio-toggle"></a>';
     $output .= '<a href="#" class="video-toggle"></a>';
 		$output .= '</div>';
-		$output .= '<script src="'.$base_url.'/profiles/thecitychurch/themes/tccc_theme/js/froogaloop2.min.js" type="text/javascript"></script>';
-		$output .= '<script src="'.$base_url.'/profiles/thecitychurch/themes/tccc_theme/js/vimeo-controls.js" type="text/javascript"></script>';
 
   }
   
