@@ -556,8 +556,8 @@ width:290px;
 
 .play-overlay{
 	width: 290px;
-	height: 102px;
-	background: url("../images/play-button.png") no-repeat center center;
+	height: 132px;
+	background: url("../images/play-button.png") no-repeat center 30px;
 	position: absolute;
 	left: 0;
 }
