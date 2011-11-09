@@ -531,6 +531,10 @@ margin-left:-10px;
 margin-left:10px;
 }
 
+a.vimeo{
+	position: relative;
+}
+
 a.vimeo img {
 background:url(../images/video-medium-shadow.png) top left no-repeat;
 padding:6px;
@@ -548,6 +552,14 @@ float:left;
 height:168px;
 margin:7px;
 width:290px;
+}
+
+.play-overlay{
+	width: 290px;
+	height: 102px;
+	background: url("../images/play-button.png") no-repeat center center;
+	position: absolute;
+	left: 0;
 }
 
 .pane-discipleship-topics {
