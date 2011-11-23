@@ -57,8 +57,13 @@ h1 {
 }
 
 h2 {
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
+}
+
+.block-intro{
+	font-size: 12px;
+	font-style: italic;
 }
 
 hr {
@@ -67,6 +72,9 @@ hr {
 
 .focus_block h2 {
   text-align: left;
+	color: #000000;
+	margin-top: 20px;
+	border-bottom: 1px solid #959797;
 }
 
 label span {
@@ -83,10 +91,14 @@ input, textarea {
 }
 
 
-label {
-	margin-right: 10px;
+label{
+	margin: 0 10px;
+}
+
+.block-intro{
 	color: #2a4269;
 }
+
 
 input[type="text"],
 textarea {
