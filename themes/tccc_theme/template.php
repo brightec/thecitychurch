@@ -63,11 +63,6 @@ function tccc_theme_menu_link(array $variables) {
   $output = '';
   $sub_menu = '';
   
-  
-  //kpr($element);
-  
-  
-  
   if ($element['#below']) {
     $sub_menu = drupal_render($element['#below']);
   }
