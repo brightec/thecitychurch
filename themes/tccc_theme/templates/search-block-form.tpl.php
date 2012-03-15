@@ -1,5 +1,5 @@
 <?php
-  php if (isset($search['extra_field'])): ?>
+   if (isset($search['extra_field'])): ?>
     <div class="extra-field">
       <?php print $search['extra_field']; ?>
     </div>

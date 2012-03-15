@@ -26,7 +26,24 @@ function tccc_context_create_resource_filter($empty, $data = NULL, $conf = FALSE
   }
 
   if ($data !== FALSE) {
+
     $context->data = $data;
+
+    //Call session var for site
+    $sites = $_POST['sites'];
+    $is_first = $_POST['is_first'];
+    
+    
+    if ($sites) {
+      $sites = implode(',', $sites);
+    }
+        
+    if(empty($is_first)) {
+      $sites = 'all';
+    }
+    
+    $context->data->sites = $sites;
+
     $context->title = t('Resource filter');
     return $context;
   }
@@ -40,12 +57,13 @@ function tccc_context_create_resource_filter($empty, $data = NULL, $conf = FALSE
  */
 function tccc_context_resource_filter_convert_list() {
   return array(
-  	'date' => t('Date'),
+    'date' => t('Date'),
     'type' => t('Type'),
     'tag' => t('Tag'),
     'series' => t('Series'),
-  	'person' => t('Person'),
+    'person' => t('Person'),
     'bible' => t('Bible'),
+    'sites' => t('Sites'),
     'nid' => t('Dummy node ID'),
   );
 }
@@ -55,6 +73,8 @@ function tccc_context_resource_filter_convert_list() {
  */
 function tccc_context_resource_filter_convert($context, $type) {
   switch ($type) {
+    case 'sites':
+      return !empty($context->data->sites) ? $context->data->sites : '';
     case 'date':
       return !empty($context->data->date) ? $context->data->date : 'all';
     case 'type':
