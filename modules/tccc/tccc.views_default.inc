@@ -11,6 +11,490 @@ function tccc_views_default_views() {
   $views = array();
 
   $view = new view;
+  $view->name = 'archive';
+  $view->description = 'Display a list of months that link to content for that month.';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Archive';
+  $view->core = 0;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Monthly archive';
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'node';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Created year + month */
+  $handler->display->display_options['arguments']['created_year_month']['id'] = 'created_year_month';
+  $handler->display->display_options['arguments']['created_year_month']['table'] = 'node';
+  $handler->display->display_options['arguments']['created_year_month']['field'] = 'created_year_month';
+  $handler->display->display_options['arguments']['created_year_month']['default_action'] = 'summary';
+  $handler->display->display_options['arguments']['created_year_month']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['created_year_month']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['created_year_month']['title'] = '%1';
+  $handler->display->display_options['arguments']['created_year_month']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['created_year_month']['summary']['sort_order'] = 'desc';
+  $handler->display->display_options['arguments']['created_year_month']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['created_year_month']['summary_options']['override'] = TRUE;
+  $handler->display->display_options['arguments']['created_year_month']['summary_options']['items_per_page'] = '30';
+  $handler->display->display_options['arguments']['created_year_month']['specify_validation'] = 1;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 0;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'archive';
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Created year + month */
+  $handler->display->display_options['arguments']['created_year_month']['id'] = 'created_year_month';
+  $handler->display->display_options['arguments']['created_year_month']['table'] = 'node';
+  $handler->display->display_options['arguments']['created_year_month']['field'] = 'created_year_month';
+  $handler->display->display_options['arguments']['created_year_month']['default_action'] = 'summary';
+  $handler->display->display_options['arguments']['created_year_month']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['created_year_month']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['created_year_month']['title'] = '%1';
+  $handler->display->display_options['arguments']['created_year_month']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['created_year_month']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['created_year_month']['summary_options']['items_per_page'] = '30';
+  $handler->display->display_options['arguments']['created_year_month']['specify_validation'] = 1;
+  $views['archive'] = $view;
+
+  $view = new view;
+  $view->name = 'backlinks';
+  $view->description = 'Displays a list of nodes that link to the node, using the search backlinks table.';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Backlinks';
+  $view->core = 0;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = 30;
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['text']['id'] = 'area';
+  $handler->display->display_options['empty']['text']['table'] = 'views';
+  $handler->display->display_options['empty']['text']['field'] = 'area';
+  $handler->display->display_options['empty']['text']['empty'] = FALSE;
+  $handler->display->display_options['empty']['text']['content'] = 'No backlinks found.';
+  $handler->display->display_options['empty']['text']['format'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['link_to_node'] = 1;
+  /* Contextual filter: Search: Links to */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'search_node_links_to';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['nid']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['nid']['title'] = 'Pages that link to %1';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 0;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'node/%/backlinks';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'What links here';
+  $handler->display->display_options['menu']['weight'] = '0';
+
+  /* Display: What links here */
+  $handler = $view->new_display('block', 'What links here', 'block');
+  $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['use_more'] = TRUE;
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Search: Links to */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'search_node_links_to';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['nid']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['nid']['title'] = 'What links here';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['nid']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['nid']['validate']['type'] = 'node';
+  $views['backlinks'] = $view;
+
+  $view = new view;
+  $view->name = 'date_browser';
+  $view->description = 'Browse through nodes by year, month, day, or week. Date browser attachment adds back/next navigation to the top of the page.';
+  $view->tag = 'Date';
+  $view->base_table = 'node';
+  $view->human_name = '';
+  $view->core = 0;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Defaults */
+  $handler = $view->new_display('default', 'Defaults', 'default');
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['row_options']['links'] = 1;
+  $handler->display->display_options['row_options']['comments'] = 0;
+  /* Contextual filter: Date: Date (node) */
+  $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
+  $handler->display->display_options['arguments']['date_argument']['table'] = 'node';
+  $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
+  $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['date_argument']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['date_argument']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
+    'node.changed' => 'node.changed',
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'date-browser';
+
+  /* Display: Date browser */
+  $handler = $view->new_display('date_nav', 'Date browser', 'date_nav_1');
+  $handler->display->display_options['items_per_page'] = 0;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'date_nav';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['inherit_exposed_filters'] = TRUE;
+  $views['date_browser'] = $view;
+
+  $view = new view;
+  $view->name = 'frontpage';
+  $view->description = 'Emulates the default Drupal front page; you may set the default home page path to this view to make it your front page.';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Front page';
+  $view->core = 0;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['row_options']['links'] = 1;
+  /* Sort criterion: Content: Sticky */
+  $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['table'] = 'node';
+  $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Promoted to front page */
+  $handler->display->display_options['filters']['promote']['id'] = 'promote';
+  $handler->display->display_options['filters']['promote']['table'] = 'node';
+  $handler->display->display_options['filters']['promote']['field'] = 'promote';
+  $handler->display->display_options['filters']['promote']['value'] = '1';
+  $handler->display->display_options['filters']['promote']['group'] = 0;
+  $handler->display->display_options['filters']['promote']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 0;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'frontpage';
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'feed');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Front page feed';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['path'] = 'rss.xml';
+  $handler->display->display_options['displays'] = array(
+    'default' => 'default',
+    'page' => 'page',
+  );
+  $handler->display->display_options['sitename_title'] = '1';
+  $views['frontpage'] = $view;
+
+  $view = new view;
+  $view->name = 'glossary';
+  $view->description = 'A list of all content, by letter.';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Glossary';
+  $view->core = 0;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_ajax'] = TRUE;
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = 36;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'name' => 'name',
+    'changed' => 'changed',
+  );
+  $handler->display->display_options['style_options']['default'] = 'title';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'separator' => '',
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'separator' => '',
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'separator' => '',
+    ),
+  );
+  $handler->display->display_options['style_options']['override'] = 1;
+  $handler->display->display_options['style_options']['sticky'] = 0;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['link_to_node'] = 1;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Author';
+  $handler->display->display_options['fields']['name']['link_to_user'] = 1;
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'Last update';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'large';
+  /* Contextual filter: Content: Title */
+  $handler->display->display_options['arguments']['title']['id'] = 'title';
+  $handler->display->display_options['arguments']['title']['table'] = 'node';
+  $handler->display->display_options['arguments']['title']['field'] = 'title';
+  $handler->display->display_options['arguments']['title']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['title']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['title']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['title']['default_argument_options']['argument'] = 'a';
+  $handler->display->display_options['arguments']['title']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['title']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['title']['glossary'] = 1;
+  $handler->display->display_options['arguments']['title']['limit'] = '1';
+  $handler->display->display_options['arguments']['title']['case'] = 'upper';
+  $handler->display->display_options['arguments']['title']['path_case'] = 'lower';
+  $handler->display->display_options['arguments']['title']['transform_dash'] = 0;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'glossary';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Glossary';
+  $handler->display->display_options['menu']['weight'] = '0';
+
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Title */
+  $handler->display->display_options['arguments']['title']['id'] = 'title';
+  $handler->display->display_options['arguments']['title']['table'] = 'node';
+  $handler->display->display_options['arguments']['title']['field'] = 'title';
+  $handler->display->display_options['arguments']['title']['default_action'] = 'summary';
+  $handler->display->display_options['arguments']['title']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['title']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['title']['default_argument_options']['argument'] = 'a';
+  $handler->display->display_options['arguments']['title']['summary']['format'] = 'unformatted_summary';
+  $handler->display->display_options['arguments']['title']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['title']['summary_options']['inline'] = 1;
+  $handler->display->display_options['arguments']['title']['summary_options']['separator'] = ' | ';
+  $handler->display->display_options['arguments']['title']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['title']['glossary'] = 1;
+  $handler->display->display_options['arguments']['title']['limit'] = '1';
+  $handler->display->display_options['arguments']['title']['case'] = 'upper';
+  $handler->display->display_options['arguments']['title']['path_case'] = 'lower';
+  $handler->display->display_options['arguments']['title']['transform_dash'] = 0;
+  $handler->display->display_options['displays'] = array(
+    'default' => 'default',
+    'page' => 'page',
+  );
+  $handler->display->display_options['inherit_arguments'] = 0;
+  $views['glossary'] = $view;
+
+  $view = new view;
+  $view->name = 'media_default';
+  $view->description = 'Default view for the media browser library tab.';
+  $view->tag = 'media, default';
+  $view->base_table = 'file_managed';
+  $view->human_name = 'Media browser';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_ajax'] = TRUE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = 1;
+  $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = 1;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['style_plugin'] = 'media_browser';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = FALSE;
+  $handler->display->display_options['empty']['area']['content'] = 'No files available.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['empty']['area']['tokenize'] = 0;
+  /* Field: File: Name */
+  $handler->display->display_options['fields']['filename']['id'] = 'filename';
+  $handler->display->display_options['fields']['filename']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['filename']['field'] = 'filename';
+  $handler->display->display_options['fields']['filename']['label'] = '';
+  $handler->display->display_options['fields']['filename']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['word_boundary'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['ellipsis'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['filename']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['filename']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['filename']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['filename']['link_to_file'] = 1;
+  /* Sort criterion: File: Upload date */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'file_managed';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['timestamp']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['timestamp']['expose']['label'] = 'Upload date';
+  /* Sort criterion: SUM(File Usage: Use count) */
+  $handler->display->display_options['sorts']['count']['id'] = 'count';
+  $handler->display->display_options['sorts']['count']['table'] = 'file_usage';
+  $handler->display->display_options['sorts']['count']['field'] = 'count';
+  $handler->display->display_options['sorts']['count']['group_type'] = 'sum';
+  $handler->display->display_options['sorts']['count']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['count']['expose']['label'] = 'Use count';
+  /* Filter criterion: File: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'file_managed';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    1 => '1',
+  );
+  /* Filter criterion: File: Name */
+  $handler->display->display_options['filters']['filename']['id'] = 'filename';
+  $handler->display->display_options['filters']['filename']['table'] = 'file_managed';
+  $handler->display->display_options['filters']['filename']['field'] = 'filename';
+  $handler->display->display_options['filters']['filename']['operator'] = 'contains';
+  $handler->display->display_options['filters']['filename']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['filename']['expose']['operator_id'] = 'filename_op';
+  $handler->display->display_options['filters']['filename']['expose']['label'] = 'File name';
+  $handler->display->display_options['filters']['filename']['expose']['operator'] = 'filename_op';
+  $handler->display->display_options['filters']['filename']['expose']['identifier'] = 'filename';
+  $handler->display->display_options['filters']['filename']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['filename']['expose']['multiple'] = FALSE;
+  /* Filter criterion: File: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'file_managed';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['reduce'] = 0;
+
+  /* Display: Media browser */
+  $handler = $view->new_display('media_browser', 'Media browser', 'media_browser_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'View Library';
+  $views['media_default'] = $view;
+
+  $view = new view;
   $view->name = 'resource_list';
   $view->description = '';
   $view->tag = 'tccc';
@@ -77,6 +561,18 @@ function tccc_views_default_views() {
   $handler->display->display_options['sorts']['field_recording_date_value']['table'] = 'field_data_field_recording_date';
   $handler->display->display_options['sorts']['field_recording_date_value']['field'] = 'field_recording_date_value';
   $handler->display->display_options['sorts']['field_recording_date_value']['order'] = 'DESC';
+  /* Contextual filter: Content: Site (field_site) */
+  $handler->display->display_options['arguments']['field_site_tid']['id'] = 'field_site_tid';
+  $handler->display->display_options['arguments']['field_site_tid']['table'] = 'field_data_field_site';
+  $handler->display->display_options['arguments']['field_site_tid']['field'] = 'field_site_tid';
+  $handler->display->display_options['arguments']['field_site_tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_site_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_site_tid']['default_argument_skip_url'] = 0;
+  $handler->display->display_options['arguments']['field_site_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_site_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_site_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_site_tid']['break_phrase'] = 1;
+  $handler->display->display_options['arguments']['field_site_tid']['not'] = 0;
   /* Contextual filter: Content: Published Date (field_recording_date) */
   $handler->display->display_options['arguments']['field_recording_date_value']['id'] = 'field_recording_date_value';
   $handler->display->display_options['arguments']['field_recording_date_value']['table'] = 'field_data_field_recording_date';
@@ -230,8 +726,92 @@ function tccc_views_default_views() {
       'fixed' => '',
       'label' => 'Content: Nid',
     ),
+    'field_site_tid' => array(
+      'type' => 'context',
+      'context' => 'resource_filter.sites',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Content: Site (field_site)',
+    ),
   );
   $views['resource_list'] = $view;
+
+  $view = new view;
+  $view->name = 'taxonomy_term';
+  $view->description = 'A view to emulate Drupal core\'s handling of taxonomy/term.';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Taxonomy term';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'node';
+  /* Sort criterion: Content: Sticky */
+  $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['table'] = 'node';
+  $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
+  $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Content: Has taxonomy term ID (with depth) */
+  $handler->display->display_options['arguments']['term_node_tid_depth']['id'] = 'term_node_tid_depth';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['table'] = 'node';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['field'] = 'term_node_tid_depth';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['term_node_tid_depth']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['term_node_tid_depth']['title'] = '%1';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['specify_validation'] = 1;
+  $handler->display->display_options['arguments']['term_node_tid_depth']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['depth'] = '0';
+  $handler->display->display_options['arguments']['term_node_tid_depth']['break_phrase'] = 1;
+  /* Contextual filter: Content: Has taxonomy term ID depth modifier */
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['id'] = 'term_node_tid_depth_modifier';
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['table'] = 'node';
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['field'] = 'term_node_tid_depth_modifier';
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['exception']['title_enable'] = 1;
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['specify_validation'] = 1;
+  /* Filter criterion: Content: Published or admin */
+  $handler->display->display_options['filters']['status_extra']['id'] = 'status_extra';
+  $handler->display->display_options['filters']['status_extra']['table'] = 'node';
+  $handler->display->display_options['filters']['status_extra']['field'] = 'status_extra';
+  $handler->display->display_options['filters']['status_extra']['group'] = 0;
+  $handler->display->display_options['filters']['status_extra']['expose']['operator'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'taxonomy/term/%';
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'feed');
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = 15;
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['path'] = 'taxonomy/term/%/%/feed';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $views['taxonomy_term'] = $view;
 
   return $views;
 }
