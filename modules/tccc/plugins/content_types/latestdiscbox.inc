@@ -19,7 +19,6 @@ function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context
   if($result){
     
     foreach($result as $topic){
-      
       $img = _tccc_media_image($topic, 'resources_feature');
       
       if (!$img) {

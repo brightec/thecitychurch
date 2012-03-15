@@ -408,7 +408,7 @@ function theme_vimeo($variables) {
     foreach ($videos as $video) {
       $output .= '<a href="' . $video->url . '" class="vimeo" rel="vimeo">';
       $output .= '<div class="play-overlay"></div>';
-      $output .= theme('image_style', array('path' => get_remote_image_from_url($video->thumbnail_medium), 'style_name' => 'video_medium'));
+      $output .= theme('image_style', array('path' => get_remote_image_from_url($video->thumbnail_large), 'style_name' => 'video_medium'));
       $output .= '</a>';
     }
     return $output;
