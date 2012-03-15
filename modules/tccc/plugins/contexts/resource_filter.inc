@@ -86,6 +86,7 @@ function tccc_context_resource_filter_convert($context, $type) {
     case 'person':
       return !empty($context->data->person) ? $context->data->person : 'all';
     case 'bible':
+      kpr($context->data);
       return !empty($context->data->bible) ? $context->data->bible : 'all';
     case 'nid':
       return !empty($context->data->nid) ? $context->data->nid : NULL;

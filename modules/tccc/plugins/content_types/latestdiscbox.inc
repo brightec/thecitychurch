@@ -9,7 +9,11 @@ $plugin = array(
 
 function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context) {
 
-  $result = _tccc_get_media('discipleship_topic', 1);    
+  $result = _tccc_get_media('discipleship_topic', 1);   
+ 
+  $home = node_load(18);
+  kpr($home);
+    
   $output = '';
   
   if($result){
@@ -17,6 +21,12 @@ function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context
     foreach($result as $topic){
       
       $img = _tccc_media_image($topic, 'resources_feature');
+      
+      if (!$img) {
+        $field = field_get_items('node', $home, 'field_image');
+        $img = theme('image_style', array('path' => $field[0]['uri'], 'style_name' => 'resources_feature'));
+      }
+      
       $img .= '<div class="shine-resource-button"></div>';
 
       $output .= l($img, 'node/' . $topic->nid, array('html' => TRUE, 'attributes' => array('class' => array('box-image'))));
