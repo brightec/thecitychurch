@@ -143,9 +143,7 @@ function _tccc_get_feed($url) {
   curl_setopt($ch, CURLOPT_URL, $url);
 
   $xmlResponse = curl_exec($ch);
-
   curl_close($ch);
-  $elements = array();
   $dom = new DOMDocument();
   $dom->loadXML($xmlResponse);
   return $dom;
@@ -153,11 +151,9 @@ function _tccc_get_feed($url) {
 
 function _tccc_ccb_events() {
 
-
   $dom = _tccc_get_feed('http://thecitychurch.ccbchurch.com/api.php?srv=public_calendar_listing&date_start=2011-01-01&date_end=2013-01-01');
   $items = $dom->getElementsByTagName('item');
   $elements = array();
-
 
   foreach ($items as $item) {
 
@@ -165,13 +161,10 @@ function _tccc_ccb_events() {
 
     $title = $item->getElementsByTagName('event_name')->item(0)->nodeValue;
     $description = $item->getElementsByTagName('event_description')->item(0)->nodeValue;
-
+    $location = $item->getElementsByTagName('location')->item(0)->nodeValue;
     $date = $item->getElementsByTagName('date')->item(0)->nodeValue;
-
-
     $start_stamp = $date . 'T' . $item->getElementsByTagName('start_time')->item(0)->nodeValue;
     $start_stamp = strtotime($start_stamp);
-
     $end_stamp = $date . ' ' . $item->getElementsByTagName('end_time')->item(0)->nodeValue;
     $end_stamp = strtotime($end_stamp);
 
@@ -182,6 +175,7 @@ function _tccc_ccb_events() {
       'title' => $title,
       'start' => $start_stamp,
       'end' => $end_stamp,
+      'location' => $location,
     );
   }
   //print_r($elements);

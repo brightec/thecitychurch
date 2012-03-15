@@ -211,7 +211,6 @@ $(document).ready(function(){
       right:  ''
     },
     eventRender: function(event, element) {
-      console.log(event);
       var sd = event._start;
 					
       var sminutes = sd.getMinutes();
@@ -230,6 +229,9 @@ $(document).ready(function(){
       var html_content = '<h4>' + event.title + '</h4>';
       if(event.description){
         html_content += '<div class="event-desc"><em>Description:</em> ' + event.description + '</div>';
+      }
+      if(event.location){
+        html_content += '<div class="event-location"><em>Location:</em> ' + event.location + '</div>';
       }
       html_content += '<div class="event-dates"><em>Date(s):</em> ' + sd.getDate() + '.' + (sd.getMonth() + 1) + '.' + sd.getFullYear() + '</div>';
       html_content += '<div class="event-time"><em>Time:</em> ' + shours + ':' + sminutes  + noon + '</div>';				  
