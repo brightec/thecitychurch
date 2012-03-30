@@ -12,7 +12,6 @@ function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context
   $result = _tccc_get_media('discipleship_topic', 1);   
  
   $home = node_load(18);
-  kpr($home);
     
   $output = '';
   
