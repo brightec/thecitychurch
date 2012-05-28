@@ -5,6 +5,7 @@
  * The URL returned by CCB is relative so fails with 'missing schema'
  * When this function detects a relative URL, the domain is prepended
  */
+
 function ccb_forms_http_request($url, array $options = array()) {
   $result = new stdClass();
 

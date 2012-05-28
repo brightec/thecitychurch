@@ -535,7 +535,7 @@ a.vimeo{
 	position: relative;
 }
 
-a.vimeo img {
+.vimeo img {
 background:url(../images/video-medium-shadow.png) top left no-repeat;
 padding:6px;
 }

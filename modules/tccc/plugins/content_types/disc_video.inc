@@ -15,16 +15,40 @@ function tccc_disc_video_content_type_render($subtype, $conf, $args, $context) {
   $node = node_load($args[0]);
   $video_field  = $node->$conf['field_select'];
 
-  foreach (field_get_items('node', $node, 'field_vimeo_id') as $item) {
-    $feed = 'http://vimeo.com/api/v2/video/' . $item['value'] .'.xml';
-    $videos =new SimpleXMLElement($feed, null, true);
 
-    foreach($videos as $video){
-      $output .= '<a href="' . $video->url . '" class="vimeo" rel="vimeo">';
-      $output .= theme('image_style', array('path' => get_remote_image_from_url($video->thumbnail_medium), 'style_name' => 'video_medium'));
-      $output .= '</a>';
+  $vimeo_items = field_get_items('node', $node, 'field_vimeo_id');
+dpm($vimeo_items);
+  if ($vimeo_items){
+    foreach ($vimeo_items as $item) {
+      $feed = 'http://vimeo.com/api/v2/video/' . $item['value'] .'.xml';
+      $videos =new SimpleXMLElement($feed, null, true);
+
+      foreach($videos as $video){
+        $output .= '<a href="' . $video->url . '" class="vimeo" rel="vimeo">';
+        $output .= theme('image_style', array('path' => get_remote_image_from_url($video->thumbnail_medium), 'style_name' => 'video_medium'));
+        $output .= '</a>';
+      }
     }
+ } 
+ else {
+  $image = field_get_items('node', $node, 'field_image');
+  dpm($image);
+  if($image) {
+
+    $variables = array(
+      'path' => $image[0]['uri'], 
+      'style_name' => 'video_medium', 
+      'alt' => $image[0]['alt'], 
+      'title' => $image[0]['title'],
+      );
+
+
+    $output .= '<div class="vimeo">';
+    $output .= theme('image_style', $variables);
+    $output .= '</div>';
+
   }
+ }
                                  
   $block = new stdClass;
   $block->title = NULL;
