@@ -9,17 +9,25 @@ $plugin = array(
 
 function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context) {
 
-  $result = _tccc_get_media('discipleship_topic', 1);   
- 
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'discipleship_topic')
+        ->propertyCondition('status', 1)
+        ->propertyOrderBy('created', 'DESC')
+        ->range(0, 1);
+
+  $result = $query->execute();
+  
   $home = node_load(18);
-    
   $output = '';
   
   if($result){
+
+    $nodes = node_load_multiple(array_keys($result['node']));  
     
-    foreach($result as $topic){
+    foreach($nodes as $topic){
       $img = _tccc_media_image($topic, 'resources_feature');
-      
+
       if (!$img) {
         $field = field_get_items('node', $home, 'field_image');
         $img = theme('image_style', array('path' => $field[0]['uri'], 'style_name' => 'resources_feature'));
