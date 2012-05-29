@@ -30,8 +30,8 @@ function tccc_context_create_resource_filter($empty, $data = NULL, $conf = FALSE
     $context->data = $data;
 
     //Call session var for site
-    $sites = $_POST['sites'];
-    $is_first = $_POST['is_first'];
+    $sites = isset($_POST['sites']) ? $_POST['sites'] : NULL;;
+    $is_first = isset($_POST['is_first']) ? $_POST['is_first'] : NULL;
     
     
     if ($sites) {
@@ -75,7 +75,7 @@ function tccc_context_resource_filter_convert($context, $type) {
 
   switch ($type) {
     case 'sites':
-      return !empty($context->data->sites) ? $context->data->sites : '';
+      return !empty($context->data->sites) ? $context->data->sites : NULL;
     case 'date':
       return !empty($context->data->date) ? $context->data->date : 'all';
     case 'type':

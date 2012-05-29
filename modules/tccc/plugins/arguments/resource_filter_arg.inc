@@ -23,6 +23,7 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
 
   $tokens = explode('/', $arg);
   $result = new tccc_media_filter;
+  dpm($tokens);
 
   if (empty($tokens)) {
     return ctools_context_create_empty('resource_filter');
@@ -41,23 +42,24 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
 
   // token 1 describes what token 2 is
   // token 2 is a filtering value of some sort
-  if ($tokens[1] == 'date') {
-    $result->type = 'date';
-    $result->date = $tokens[2];
-  } else if ($tokens[1] == 'tag') {
-    $result->type = 'tag';
-    $result->tag = $tokens[2];
-  } else if ($tokens[1] == 'series') {
-    $result->type = 'series';
-    $result->series = $tokens[2];
-  } else if ($tokens[1] == 'people') {
-    $result->type = 'person';
-    $result->person = $tokens[2];
-  } else if ($tokens[1] == 'bible') {
-    $result->type = 'bible';
-    $result->bible = $tokens[2];
+  if (isset($tokens[1])){
+    if ($tokens[1] == 'date') {
+      $result->type = 'date';
+      $result->date = $tokens[2];
+    } else if ($tokens[1] == 'tag') {
+      $result->type = 'tag';
+      $result->tag = $tokens[2];
+    } else if ($tokens[1] == 'series') {
+      $result->type = 'series';
+      $result->series = $tokens[2];
+    } else if ($tokens[1] == 'people') {
+      $result->type = 'person';
+      $result->person = $tokens[2];
+    } else if ($tokens[1] == 'bible') {
+      $result->type = 'bible';
+      $result->bible = $tokens[2];
+    }
   }
-  
   // to make the view show no rows instead of all rows, pass in a non-existent nid here
   //if ($result->bundle == 'sermon' && empty($tokens[2])) {
   //  $result->nid = -1;

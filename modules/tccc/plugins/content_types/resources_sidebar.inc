@@ -55,6 +55,9 @@ function tccc_resources_sidebar_content_type_render($subtype, $conf, $args, $con
 
 function _tccc_resources_sidebar_sites_form($form, &$form_state) {
 
+
+  //If its the first tme the page loads then it shows all the sites 
+  //regardless if the location is set
   $IS_FIRST = 'FALSE';
   if (empty($form_state['input'])) {
     $IS_FIRST = 'TRUE';
