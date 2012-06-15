@@ -14,13 +14,12 @@ function tccc_resources_sidebar_content_type_render($subtype, $conf, $args, $con
   //sites form
   $form = drupal_get_form('_tccc_resources_sidebar_sites_form');
 
-
   //filter
   $resource_list = '';
   $filter = $context->data;
 
   switch ($filter->type) {
-    case 'data':
+    case 'date':
       $resource_list = _tccc_resources_sidebar_dates($filter);
       break;
     case 'tag':

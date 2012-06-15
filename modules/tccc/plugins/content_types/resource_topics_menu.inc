@@ -13,8 +13,6 @@ $plugin = array(
 function tccc_resource_topics_menu_content_type_render($subtype, $conf, $args, $contexts) {
   list($taxonomy_term_context, $media_filter_context) = $contexts;
 
-  //kpr($taxonomy_term_context);
-  //kpr($media_filter_context);
   return;
   
   if (!empty($context)) {

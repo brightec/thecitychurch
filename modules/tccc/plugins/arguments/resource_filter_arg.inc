@@ -42,24 +42,36 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
 
   // token 1 describes what token 2 is
   // token 2 is a filtering value of some sort
-  if (isset($tokens[1]) && isset($tokens[2])) { 
+  if (isset($tokens[1])) { 
     if ($tokens[1] == 'date') {
       $result->type = 'date';
-      $result->date = $tokens[2];
+      if (isset($tokens[2])) { $result->date = $tokens[2]; }
+
     } else if ($tokens[1] == 'tag') {
+      
       $result->type = 'tag';
-      $result->tag = $tokens[2];
+      if (isset($tokens[2])) { $result->tag = $tokens[2]; }
+
     } else if ($tokens[1] == 'series') {
+      
       $result->type = 'series';
-      $result->series = $tokens[2];
+      if (isset($tokens[2])) { $result->series = $tokens[2]; }
+
     } else if ($tokens[1] == 'people') {
+
       $result->type = 'person';
-      $result->person = $tokens[2];
+      if (isset($tokens[2])) { $result->person = $tokens[2]; }
+
     } else if ($tokens[1] == 'bible') {
+
       $result->type = 'bible';
-      $result->bible = $tokens[2];
+      if (isset($tokens[2])) { $result->bible = $tokens[2]; }
+
     }
   }
+
+  // Sites - check if user has selected to view specific sites.
+  $result->sites = isset($_POST['sites']) ? implode(',', $_POST['sites']) : NULL;
   // to make the view show no rows instead of all rows, pass in a non-existent nid here
   //if ($result->bundle == 'sermon' && empty($tokens[2])) {
   //  $result->nid = -1;

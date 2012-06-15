@@ -26,25 +26,10 @@ function tccc_context_create_resource_filter($empty, $data = NULL, $conf = FALSE
   }
 
   if ($data !== FALSE) {
-
-    $context->data = $data;
-
-    //Call session var for site
-    $sites = isset($_POST['sites']) ? $_POST['sites'] : NULL;;
-    $is_first = isset($_POST['is_first']) ? $_POST['is_first'] : NULL;
-    
-    
-    if ($sites) {
-      $sites = implode(',', $sites);
-    }
-        
-    if(empty($is_first)) {
-      $sites = 'all';
-    }
-    
-    $context->data->sites = $sites;
-
+  
+    $context->data = $data;  
     $context->title = t('Resource filter');
+
     return $context;
   }
 }
@@ -63,8 +48,9 @@ function tccc_context_resource_filter_convert_list() {
     'series' => t('Series'),
     'person' => t('Person'),
     'bible' => t('Bible'),
-    'sites' => t('Sites'),
     'nid' => t('Dummy node ID'),
+    'sites' => t('Site'),
+
   );
 }
 
@@ -74,22 +60,26 @@ function tccc_context_resource_filter_convert_list() {
 function tccc_context_resource_filter_convert($context, $type) {
 
   switch ($type) {
-    case 'sites':
-      return !empty($context->data->sites) ? $context->data->sites : NULL;
     case 'date':
-      return !empty($context->data->date) ? $context->data->date : 'all';
+      return isset($context->data->date) ? $context->data->date : 'all';
     case 'type':
-      return !empty($context->data->bundle) ? $context->data->bundle : 'all';
+      return isset($context->data->bundle) ? $context->data->bundle : 'all';
     case 'tag':
-      return !empty($context->data->tag) ? $context->data->tag : 'all';
+      return isset($context->data->tag) ? $context->data->tag : 'all';
     case 'series':
-      return !empty($context->data->series) ? $context->data->series : 'all';
+      return isset($context->data->series) ? $context->data->series : 'all';
     case 'person':
-      return !empty($context->data->person) ? $context->data->person : 'all';
+      return isset($context->data->person) ? $context->data->person : 'all';
     case 'bible':
-      return !empty($context->data->bible) ? $context->data->bible : 'all';
+      return isset($context->data->bible) ? $context->data->bible : 'all';
     case 'nid':
-      return !empty($context->data->nid) ? $context->data->nid : NULL;
+    // return 1344;
+      return isset($context->data->nid) ? $context->data->nid : NULL;
+    case 'sites':
+      return isset($context->data->sites) ? $context->data->sites : 'all';  
+    default: 
+      return 'all';
+    break; 
   }
 }
 

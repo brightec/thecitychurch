@@ -181,10 +181,10 @@ function theme_media($variables) {
     //Sites
     $sites_item = field_get_items('node', $item, 'field_site');
     if ($sites_item) {
-      $sites = taxonomy_term_load_multiple($sites_item);
-
+      //Get taxonomy tids and load
       $element = array();
-      foreach ($sites as $site) {
+      foreach ($sites_item as $tid) {
+        $site = taxonomy_term_load($tid['tid']);
         $element[] = $site->name;
       }
 
@@ -192,7 +192,6 @@ function theme_media($variables) {
     }
 
     $elements_render = implode('&nbsp;&#124;&nbsp;', $elements);
-
 
 
     //Main text
@@ -223,7 +222,7 @@ function theme_media($variables) {
 
 
 
-  //Output
+  // Output
   $output = array(
     'title' => array(
       '#markup' => l($item->title, 'node/' . $item->vid),

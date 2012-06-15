@@ -481,7 +481,8 @@ margin-bottom:7px;
 
 .pane-resources-sidebar ul.child {
 list-style-image:url(../images/bullet.png);
-list-style-position:inside;
+list-style-position: outside;
+margin-left: 10px;
 }
 
 .resource-list-pane {

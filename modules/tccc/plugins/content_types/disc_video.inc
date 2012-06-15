@@ -14,8 +14,8 @@ function tccc_disc_video_content_type_render($subtype, $conf, $args, $context) {
 
   $node = node_load($args[0]);
   $video_field  = $node->$conf['field_select'];
-
   $vimeo_items = field_get_items('node', $node, 'field_vimeo_id');
+  
   if ($vimeo_items){
     foreach ($vimeo_items as $item) {
       $feed = 'http://vimeo.com/api/v2/video/' . $item['value'] .'.xml';
