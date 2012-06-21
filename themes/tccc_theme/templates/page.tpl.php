@@ -113,7 +113,7 @@
             <div id="content-top">
               <?php print $messages; ?>
               <a id="main-content"></a>
-              <?php if ($title || $tabs || $page['help'] || $action_links): ?>
+              <?php if ($title || $tabs || !empty($page['help']) || $action_links): ?>
                 <div class="b">
                   <?php print render($title_prefix); ?>
                   <?php if ($title && !$is_front): ?><h1 class="title" id="page-title"><?php print $title; ?></h1><?php endif; ?>

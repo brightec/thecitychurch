@@ -330,25 +330,32 @@ function _tccc_media_image($node, $preset) {
     return _tccc_render_image('node', $node, 'field_image', $preset);
   }
 
+  $vimeo_ids = field_get_items('node', $node, 'field_vimeo_id');
   // second, does it have a vimeo ID from which we can get an image?
-  foreach (field_get_items('node', $node, 'field_vimeo_id') as $vimeo_id) {
-    $metadata = _tccc_vimeo_metadata($vimeo_id['safe_value']);
-    $attributes = array(
-      'src' => check_url($metadata->thumbnail_large),
-    );
-    if ($preset == 'resources_feature') {
-      $style = image_style_load($preset);
-      $attributes['width'] = $style['effects'][0]['data']['width'];
-      $attributes['height'] = $style['effects'][0]['data']['height'];
+  if ($vimeo_ids) {
+    foreach ($vimeo_ids as $vimeo_id) {
+      $metadata = _tccc_vimeo_metadata($vimeo_id['safe_value']);
+      $attributes = array(
+        'src' => check_url($metadata->thumbnail_large),
+      );
+      if ($preset == 'resources_feature') {
+        $style = image_style_load($preset);
+        $attributes['width'] = $style['effects'][0]['data']['width'];
+        $attributes['height'] = $style['effects'][0]['data']['height'];
+      }
+      return '<img' . drupal_attributes($attributes) . '>';
     }
-    return '<img' . drupal_attributes($attributes) . '>';
   }
 
-  // third, does it have a series and does that have an image?
-  foreach (field_get_items('node', $node, 'field_media_series') as $item) {
-    $series = taxonomy_term_load($item['tid']);
-    if (field_get_items('taxonomy_term', $series, 'field_video_image')) {
-      return _tccc_render_image('taxonomy_term', $series, 'field_video_image', $preset);
+  $media_series = field_get_items('node', $node, 'field_media_series');
+
+  if ($media_series) {
+    // third, does it have a series and does that have an image?
+    foreach ($media_series as $item) {
+      $series = taxonomy_term_load($item['tid']);
+      if (field_get_items('taxonomy_term', $series, 'field_video_image')) {
+        return _tccc_render_image('taxonomy_term', $series, 'field_video_image', $preset);
+      }
     }
   }
 }

@@ -39,7 +39,7 @@ function tccc_latestseriesbox_content_type_render($subtype, $conf, $args, $conte
   $output .= '<div class="text">';
   $output .= l($series->name, $path) . '<br>';
   $output .= _tccc_latestseriesbox_date_range($series->tid);
-  $output .= '<p>' . $term->description . '</p>';
+  $output .= '<p>' . $series->description . '</p>';
   $output .= '</div>';
   
   $block = new stdClass;

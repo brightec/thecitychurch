@@ -19,7 +19,7 @@ function tccc_latestpaperbox_content_type_render($subtype, $conf, $args, $contex
       
       $path = 'node/' . $paper->nid;
       
-      $img .= _tccc_media_image($paper, 'resources_feature');
+      $img = _tccc_media_image($paper, 'resources_feature');
       $img .= '<div class="shine-resource-button"></div>';
       
       $output .= l($img, $path, array('html' => TRUE, 'attributes' => array('class' => array('box-image'))));

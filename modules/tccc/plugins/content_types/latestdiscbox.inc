@@ -29,7 +29,7 @@ function tccc_latestdiscbox_content_type_render($subtype, $conf, $args, $context
       $img = _tccc_media_image($topic, 'resources_feature');
 
       if (!$img) {
-        $field = field_get_items('node', $home, 'field_image');
+        $field = field_get_items('node', $topic, 'field_image');
         $img = theme('image_style', array('path' => $field[0]['uri'], 'style_name' => 'resources_feature'));
       }
       
