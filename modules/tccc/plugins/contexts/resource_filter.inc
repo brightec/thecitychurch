@@ -25,8 +25,7 @@ function tccc_context_create_resource_filter($empty, $data = NULL, $conf = FALSE
     return $context;
   }
 
-  if ($data !== FALSE) {
-  
+  if ($data !== FALSE) { 
     $context->data = $data;  
     $context->title = t('Resource filter');
 
@@ -73,7 +72,6 @@ function tccc_context_resource_filter_convert($context, $type) {
     case 'bible':
       return isset($context->data->bible) ? $context->data->bible : 'all';
     case 'nid':
-    // return 1344;
       return isset($context->data->nid) ? $context->data->nid : NULL;
     case 'sites':
       return isset($context->data->sites) ? $context->data->sites : 'all';  

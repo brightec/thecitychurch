@@ -23,7 +23,6 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
 
   $tokens = explode('/', $arg);
   $result = new tccc_media_filter;
- 
 
   if (empty($tokens)) {
     return ctools_context_create_empty('resource_filter');
@@ -77,8 +76,10 @@ function tccc_resource_filter_context_arg($arg = NULL, $conf = NULL, $empty = FA
   //  $result->nid = -1;
   //}
   
+
   $context = ctools_context_create('resource_filter', $result);
   $context->original_argument = $arg;
+
   return $context;
 }
 
