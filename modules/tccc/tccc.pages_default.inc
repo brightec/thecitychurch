@@ -14,11 +14,53 @@ function tccc_default_page_manager_handlers() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'node_view_http_response';
+  $handler->task = 'node_view';
+  $handler->subtask = '';
+  $handler->handler = 'http_response';
+  $handler->weight = -22;
+  $handler->conf = array(
+    'title' => 'Media Item Redirect',
+    'contexts' => array(),
+    'relationships' => array(),
+    'code' => '301',
+    'destination' => '%node:url',
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'node_type',
+          'settings' => array(
+            'type' => array(
+              'music' => 'music',
+              'paper' => 'paper',
+              'sermon' => 'sermon',
+            ),
+          ),
+          'context' => 'argument_entity_id:node_1',
+          'not' => FALSE,
+        ),
+        1 => array(
+          'name' => 'php',
+          'settings' => array(
+            'description' => 'Path contains /node/*',
+            'php' => 'return preg_match(\'/^\\/node\\/.*/i\', $_SERVER[\'REQUEST_URI\']);',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $handlers['node_view_http_response'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'node_view_panel_context';
   $handler->task = 'node_view';
   $handler->subtask = '';
   $handler->handler = 'panel_context';
-  $handler->weight = -25;
+  $handler->weight = -23;
   $handler->conf = array(
     'title' => 'Media Item',
     'no_blocks' => 0,
@@ -40,6 +82,14 @@ function tccc_default_page_manager_handlers() {
           ),
           'context' => 'argument_entity_id:node_1',
           'not' => FALSE,
+        ),
+        1 => array(
+          'name' => 'php',
+          'settings' => array(
+            'description' => 'Path is /node/*',
+            'php' => 'return preg_match(\'/^\\/node\\/.*/i\', $_SERVER[\'REQUEST_URI\']);',
+          ),
+          'not' => TRUE,
         ),
       ),
       'logic' => 'and',
@@ -90,7 +140,6 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
     $display->content['new-1'] = $pane;
     $display->panels['left'][0] = 'new-1';
     $pane = new stdClass();
@@ -114,7 +163,6 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
     $display->content['new-2'] = $pane;
     $display->panels['media-section'][0] = 'new-2';
     $pane = new stdClass();
@@ -149,7 +197,6 @@ function tccc_default_page_manager_handlers() {
     );
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
     $display->content['new-3'] = $pane;
     $display->panels['media-section'][1] = 'new-3';
     $pane = new stdClass();
@@ -177,7 +224,6 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
     $display->content['new-4'] = $pane;
     $display->panels['right'][0] = 'new-4';
     $pane = new stdClass();
@@ -209,7 +255,6 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
     $display->content['new-5'] = $pane;
     $display->panels['wide-bottom'][0] = 'new-5';
     $pane = new stdClass();
@@ -241,7 +286,6 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
     $display->content['new-6'] = $pane;
     $display->panels['wide-top'][0] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
@@ -304,7 +348,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-1';
     $pane->panel = 'main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column1';
@@ -338,11 +382,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-7'] = $pane;
-    $display->panels['main'][0] = 'new-7';
+    $display->content['new-1'] = $pane;
+    $display->panels['main'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-2';
     $pane->panel = 'main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column2';
@@ -376,11 +419,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-8'] = $pane;
-    $display->panels['main'][1] = 'new-8';
+    $display->content['new-2'] = $pane;
+    $display->panels['main'][1] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-3';
     $pane->panel = 'main';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column3';
@@ -414,11 +456,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 2;
-    $pane->locks = '';
-    $display->content['new-9'] = $pane;
-    $display->panels['main'][2] = 'new-9';
+    $display->content['new-3'] = $pane;
+    $display->panels['main'][2] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-4';
     $pane->panel = 'wide';
     $pane->type = 'standard_header';
     $pane->subtype = 'standard_header';
@@ -450,9 +491,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-10'] = $pane;
-    $display->panels['wide'][0] = 'new-10';
+    $display->content['new-4'] = $pane;
+    $display->panels['wide'][0] = 'new-4';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -494,7 +534,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-1';
     $pane->panel = 'wide';
     $pane->type = 'block';
     $pane->subtype = 'system-powered-by';
@@ -521,9 +561,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-11'] = $pane;
-    $display->panels['wide'][0] = 'new-11';
+    $display->content['new-1'] = $pane;
+    $display->panels['wide'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -581,7 +620,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-1';
     $pane->panel = 'left';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column1';
@@ -615,11 +654,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-12'] = $pane;
-    $display->panels['left'][0] = 'new-12';
+    $display->content['new-1'] = $pane;
+    $display->panels['left'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-13';
+    $pane->pid = 'new-2';
     $pane->panel = 'right';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column2';
@@ -653,11 +691,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-13'] = $pane;
-    $display->panels['right'][0] = 'new-13';
+    $display->content['new-2'] = $pane;
+    $display->panels['right'][0] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-14';
+    $pane->pid = 'new-3';
     $pane->panel = 'wide-top';
     $pane->type = 'standard_header';
     $pane->subtype = 'standard_header';
@@ -689,9 +726,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-14'] = $pane;
-    $display->panels['wide-top'][0] = 'new-14';
+    $display->content['new-3'] = $pane;
+    $display->panels['wide-top'][0] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -747,7 +783,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-15';
+    $pane->pid = 'new-1';
     $pane->panel = 'left-sidebar';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column1';
@@ -779,11 +815,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-15'] = $pane;
-    $display->panels['left-sidebar'][0] = 'new-15';
+    $display->content['new-1'] = $pane;
+    $display->panels['left-sidebar'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-16';
+    $pane->pid = 'new-2';
     $pane->panel = 'middle-column';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column2';
@@ -817,11 +852,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-16'] = $pane;
-    $display->panels['middle-column'][0] = 'new-16';
+    $display->content['new-2'] = $pane;
+    $display->panels['middle-column'][0] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-17';
+    $pane->pid = 'new-3';
     $pane->panel = 'right-sidebar';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column3';
@@ -853,11 +887,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-17'] = $pane;
-    $display->panels['right-sidebar'][0] = 'new-17';
+    $display->content['new-3'] = $pane;
+    $display->panels['right-sidebar'][0] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-18';
+    $pane->pid = 'new-4';
     $pane->panel = 'wide-top';
     $pane->type = 'standard_header';
     $pane->subtype = 'standard_header';
@@ -887,9 +920,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-18'] = $pane;
-    $display->panels['wide-top'][0] = 'new-18';
+    $display->content['new-4'] = $pane;
+    $display->panels['wide-top'][0] = 'new-4';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -944,7 +976,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-19';
+    $pane->pid = 'new-1';
     $pane->panel = 'column-1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_subtitle1';
@@ -975,11 +1007,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-19'] = $pane;
-    $display->panels['column-1'][0] = 'new-19';
+    $display->content['new-1'] = $pane;
+    $display->panels['column-1'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-20';
+    $pane->pid = 'new-2';
     $pane->panel = 'column-1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column1';
@@ -1010,11 +1041,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-20'] = $pane;
-    $display->panels['column-1'][1] = 'new-20';
+    $display->content['new-2'] = $pane;
+    $display->panels['column-1'][1] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-21';
+    $pane->pid = 'new-3';
     $pane->panel = 'column-2';
     $pane->type = 'social_feed';
     $pane->subtype = 'social_feed';
@@ -1041,11 +1071,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-21'] = $pane;
-    $display->panels['column-2'][0] = 'new-21';
+    $display->content['new-3'] = $pane;
+    $display->panels['column-2'][0] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-22';
+    $pane->pid = 'new-4';
     $pane->panel = 'column-3';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_subtitle3';
@@ -1076,11 +1105,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-22'] = $pane;
-    $display->panels['column-3'][0] = 'new-22';
+    $display->content['new-4'] = $pane;
+    $display->panels['column-3'][0] = 'new-4';
     $pane = new stdClass();
-    $pane->pid = 'new-23';
+    $pane->pid = 'new-5';
     $pane->panel = 'column-3';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_column3';
@@ -1111,11 +1139,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-23'] = $pane;
-    $display->panels['column-3'][1] = 'new-23';
+    $display->content['new-5'] = $pane;
+    $display->panels['column-3'][1] = 'new-5';
     $pane = new stdClass();
-    $pane->pid = 'new-24';
+    $pane->pid = 'new-6';
     $pane->panel = 'wide-top';
     $pane->type = 'header_images';
     $pane->subtype = 'header_images';
@@ -1132,9 +1159,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-24'] = $pane;
-    $display->panels['wide-top'][0] = 'new-24';
+    $display->content['new-6'] = $pane;
+    $display->panels['wide-top'][0] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1201,7 +1227,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-25';
+    $pane->pid = 'new-1';
     $pane->panel = 'bottom';
     $pane->type = 'discipleship_topics';
     $pane->subtype = 'discipleship_topics';
@@ -1226,11 +1252,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-25'] = $pane;
-    $display->panels['bottom'][0] = 'new-25';
+    $display->content['new-1'] = $pane;
+    $display->panels['bottom'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-26';
+    $pane->pid = 'new-2';
     $pane->panel = 'main';
     $pane->type = 'standard_header';
     $pane->subtype = 'standard_header';
@@ -1260,11 +1285,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-26'] = $pane;
-    $display->panels['main'][0] = 'new-26';
+    $display->content['new-2'] = $pane;
+    $display->panels['main'][0] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-27';
+    $pane->pid = 'new-3';
     $pane->panel = 'main';
     $pane->type = 'discipleship_landing';
     $pane->subtype = 'discipleship_landing';
@@ -1291,9 +1315,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-27'] = $pane;
-    $display->panels['main'][1] = 'new-27';
+    $display->content['new-3'] = $pane;
+    $display->panels['main'][1] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1368,43 +1391,7 @@ function tccc_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-28';
-    $pane->panel = 'bottom';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_summary';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'text_default',
-      'formatter_settings' => array(),
-      'context' => 'context_entity:node_18',
-      'override_title' => 1,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => array(
-        'width' => '12',
-        'prefix' => '',
-        'suffix' => '',
-        'push' => '',
-        'pull' => '',
-        'alpha' => 1,
-        'omega' => 1,
-        'debug' => 1,
-        'element' => 'aside',
-      ),
-      'style' => 'grid',
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-28'] = $pane;
-    $display->panels['bottom'][0] = 'new-28';
-    $pane = new stdClass();
-    $pane->pid = 'new-29';
+    $pane->pid = 'new-1';
     $pane->panel = 'content-left';
     $pane->type = 'disc_video';
     $pane->subtype = 'disc_video';
@@ -1436,12 +1423,11 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-29'] = $pane;
-    $display->panels['content-left'][0] = 'new-29';
+    $display->content['new-1'] = $pane;
+    $display->panels['content-left'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-30';
-    $pane->panel = 'content-left';
+    $pane->pid = 'new-2';
+    $pane->panel = 'content-right';
     $pane->type = 'authored_by';
     $pane->subtype = 'authored_by';
     $pane->shown = TRUE;
@@ -1468,12 +1454,11 @@ function tccc_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-30'] = $pane;
-    $display->panels['content-left'][1] = 'new-30';
+    $pane->position = 0;
+    $display->content['new-2'] = $pane;
+    $display->panels['content-right'][0] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-31';
+    $pane->pid = 'new-3';
     $pane->panel = 'content-right';
     $pane->type = 'discipleship_text';
     $pane->subtype = 'discipleship_text';
@@ -1503,12 +1488,11 @@ function tccc_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-31'] = $pane;
-    $display->panels['content-right'][0] = 'new-31';
+    $pane->position = 1;
+    $display->content['new-3'] = $pane;
+    $display->panels['content-right'][1] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-32';
+    $pane->pid = 'new-4';
     $pane->panel = 'header';
     $pane->type = 'standard_header';
     $pane->subtype = 'standard_header';
@@ -1538,11 +1522,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-32'] = $pane;
-    $display->panels['header'][0] = 'new-32';
+    $display->content['new-4'] = $pane;
+    $display->panels['header'][0] = 'new-4';
     $pane = new stdClass();
-    $pane->pid = 'new-33';
+    $pane->pid = 'new-5';
     $pane->panel = 'resources';
     $pane->type = 'related_content';
     $pane->subtype = 'related_content';
@@ -1590,11 +1573,10 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-33'] = $pane;
-    $display->panels['resources'][0] = 'new-33';
+    $display->content['new-5'] = $pane;
+    $display->panels['resources'][0] = 'new-5';
     $pane = new stdClass();
-    $pane->pid = 'new-34';
+    $pane->pid = 'new-6';
     $pane->panel = 'resources';
     $pane->type = 'related_content';
     $pane->subtype = 'related_content';
@@ -1642,9 +1624,8 @@ function tccc_default_page_manager_handlers() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-34'] = $pane;
-    $display->panels['resources'][1] = 'new-34';
+    $display->content['new-6'] = $pane;
+    $display->panels['resources'][1] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1704,7 +1685,7 @@ function tccc_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-35';
+    $pane->pid = 'new-1';
     $pane->panel = 'heading';
     $pane->type = 'calendar';
     $pane->subtype = 'calendar';
@@ -1731,11 +1712,10 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-35'] = $pane;
-    $display->panels['heading'][0] = 'new-35';
+    $display->content['new-1'] = $pane;
+    $display->panels['heading'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-36';
+    $pane->pid = 'new-2';
     $pane->panel = 'main';
     $pane->type = 'promotedevents';
     $pane->subtype = 'promotedevents';
@@ -1762,9 +1742,8 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-36'] = $pane;
-    $display->panels['main'][0] = 'new-36';
+    $display->content['new-2'] = $pane;
+    $display->panels['main'][0] = 'new-2';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1820,7 +1799,7 @@ function tccc_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-37';
+    $pane->pid = 'new-1';
     $pane->panel = 'wide-top';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-resource-library-menu';
@@ -1847,9 +1826,8 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-37'] = $pane;
-    $display->panels['wide-top'][0] = 'new-37';
+    $display->content['new-1'] = $pane;
+    $display->panels['wide-top'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1901,7 +1879,7 @@ function tccc_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-38';
+    $pane->pid = 'new-1';
     $pane->panel = 'heading';
     $pane->type = 'resources_header';
     $pane->subtype = 'resources_header';
@@ -1929,11 +1907,10 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-38'] = $pane;
-    $display->panels['heading'][0] = 'new-38';
+    $display->content['new-1'] = $pane;
+    $display->panels['heading'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-39';
+    $pane->pid = 'new-2';
     $pane->panel = 'main';
     $pane->type = 'panels_mini';
     $pane->subtype = 'media_landing_boxes';
@@ -1950,9 +1927,8 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-39'] = $pane;
-    $display->panels['main'][0] = 'new-39';
+    $display->content['new-2'] = $pane;
+    $display->panels['main'][0] = 'new-2';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -2026,7 +2002,7 @@ function tccc_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-40';
+    $pane->pid = 'new-1';
     $pane->panel = 'left';
     $pane->type = 'resources_sidebar';
     $pane->subtype = 'resources_sidebar';
@@ -2054,11 +2030,10 @@ function tccc_default_page_manager_pages() {
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-40'] = $pane;
-    $display->panels['left'][0] = 'new-40';
+    $display->content['new-1'] = $pane;
+    $display->panels['left'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-41';
+    $pane->pid = 'new-2';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
     $pane->subtype = 'resource_list-panel_pane_1';
@@ -2111,11 +2086,10 @@ resources/*/bible/*',
     );
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-41'] = $pane;
-    $display->panels['right'][0] = 'new-41';
+    $display->content['new-2'] = $pane;
+    $display->panels['right'][0] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-42';
+    $pane->pid = 'new-3';
     $pane->panel = 'right';
     $pane->type = 'views_panes';
     $pane->subtype = 'resource_list-panel_pane_2';
@@ -2168,11 +2142,10 @@ resources/*/bible/*',
     );
     $pane->extras = array();
     $pane->position = 1;
-    $pane->locks = '';
-    $display->content['new-42'] = $pane;
-    $display->panels['right'][1] = 'new-42';
+    $display->content['new-3'] = $pane;
+    $display->panels['right'][1] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-43';
+    $pane->pid = 'new-4';
     $pane->panel = 'wide-top';
     $pane->type = 'resources_header';
     $pane->subtype = 'resources_header';
@@ -2200,9 +2173,8 @@ resources/*/bible/*',
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 0;
-    $pane->locks = '';
-    $display->content['new-43'] = $pane;
-    $display->panels['wide-top'][0] = 'new-43';
+    $display->content['new-4'] = $pane;
+    $display->panels['wide-top'][0] = 'new-4';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

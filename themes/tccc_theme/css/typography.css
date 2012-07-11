@@ -256,7 +256,8 @@ ul.menu, body ul, .item-list ul, body ol {
   color: #000;
 }
 
-.pane-discipleship-text .field-name-field-summary {
+.pane-discipleship-text .field-name-field-summary p {
+  margin-top: 0;
   color: #000;
 }
 
