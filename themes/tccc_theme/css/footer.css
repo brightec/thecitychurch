@@ -4,12 +4,12 @@
 #footer-wrapper {
 background-image:url(../images/page_background.png);
 background-position:center top;
-background-repeat:no-repeat;
+background-repeat: repeat-y;
 }
 
 #footer-container {
 background-color:#000;
-background-image:url(../images/page_background.png);
+background-image:url(../images/footer_background.png);
 background-position:-10px 0;
 background-repeat:no-repeat;
 color:#FFF;
