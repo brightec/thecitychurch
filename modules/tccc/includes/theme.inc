@@ -220,12 +220,10 @@ function theme_media($variables) {
     }
   }
 
-
-
   // Output
   $output = array(
     'title' => array(
-      '#markup' => l($item->title, 'node/' . $item->vid),
+      '#markup' => l($item->title, 'node/' . $item->nid),
       '#prefix' => '<h2>',
       '#suffix' => '</h2>',
     ),
